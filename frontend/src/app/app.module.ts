@@ -6,9 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserListComponent } from './auth/user/user-list/user-list.component';
 import { UserComponent } from './auth/user/user.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './auth/login/login.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSliderModule} from "@angular/material/slider";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -23,7 +28,13 @@ import { LoginComponent } from './auth/login/login.component';
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatSliderModule,
+    BrowserAnimationsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

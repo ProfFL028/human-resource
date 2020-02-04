@@ -1,19 +1,21 @@
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100" style="padding: 55px 55px 65px 50px;">
-      <form #authForm="ngForm" class="login100-form">
+      <app-loading *ngIf="isLoading"></app-loading>
+      <mat-error>{{error}}</mat-error>
+      <form  class="login100-form" *ngIf="!isLoading">
         <span class="login100-form-title" style="padding-bottom: 33px">登录</span>
         <mat-form-field class="wrap-input100">
-          <input matInput placeholder="柜员号" [formControl]="tellerNumberController">
+          <input matInput placeholder="柜员号" [formControl]="tellerNumberController" ngModel name="tellerNumber">
           <mat-error *ngIf="tellerNumberController.touched && !tellerNumberController.valid">请输入柜员号</mat-error>
         </mat-form-field>
-        <mat-form-field class="wrap-input100">
-          <input matInput placeholder="密码" [formControl]="tellerNumberController">
-          <mat-error *ngIf="tellerNumberController.touched && !tellerNumberController.valid">请输入密码</mat-error>
+        <mat-form-field class="wrap-input100" style="margin-top: 30px">
+          <input matInput type="password" placeholder="密码" [formControl]="passwordController" ngModel name="password">
+          <mat-error *ngIf="passwordController.touched && !passwordController.valid">请输入密码</mat-error>
         </mat-form-field>
 
         <div class="container-login100-form-btn" style="margin-top: 20px">
-          <button class="login100-form-btn">登录</button>
+          <button class="login100-form-btn btn btn-primary" (click)="onLoginClick()" [disabled]="!authForm.valid">登录</button>
         </div>
 
         <div class="text-center" style="padding-top: 45px; padding-bottom: 4px;">

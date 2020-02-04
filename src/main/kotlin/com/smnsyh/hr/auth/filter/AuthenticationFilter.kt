@@ -7,6 +7,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.MDC
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse
 
 class AuthenticationFilter : GenericFilterBean {
     private val authenticationManager: AuthenticationManager
+
     constructor(authenticationManager: AuthenticationManager) {
         this.authenticationManager = authenticationManager
     }
@@ -67,6 +69,9 @@ class AuthenticationFilter : GenericFilterBean {
         } catch (authenticationException: AuthenticationException) {
             SecurityContextHolder.clearContext()
             httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, authenticationException.message)
+        } catch (badCredentialException: BadCredentialsException) {
+            SecurityContextHolder.clearContext()
+            httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, badCredentialException.message)
         } finally {
             MDC.remove(TOKEN_SESSION_KEY)
             MDC.remove(USER_SESSION_KEY)
@@ -77,14 +82,14 @@ class AuthenticationFilter : GenericFilterBean {
         val authentication: Authentication? = SecurityContextHolder.getContext().authentication
         var tokenValue = "EMPTY"
 
-        if (authentication!= null && StringUtils.isEmpty(authentication.details.toString())) {
+        if (authentication != null && StringUtils.isEmpty(authentication.details.toString())) {
             val encoder = BCryptPasswordEncoder()
             tokenValue = encoder.encode(authentication.details.toString())
         }
         MDC.put(TOKEN_SESSION_KEY, tokenValue)
 
         var userValue = "EMPTY"
-        if (authentication!= null && StringUtils.isEmpty(authentication.principal.toString())) {
+        if (authentication != null && StringUtils.isEmpty(authentication.principal.toString())) {
             userValue = authentication.principal.toString()
         }
         MDC.put(USER_SESSION_KEY, userValue)

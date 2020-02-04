@@ -14,6 +14,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSliderModule} from "@angular/material/slider";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from "@angular/material/input";
+import { HomepageComponent } from './homepage/homepage.component';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import {MatInputModule} from "@angular/material/input";
     AppComponent,
     UserListComponent,
     UserComponent,
-    LoginComponent
+    LoginComponent,
+    HomepageComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

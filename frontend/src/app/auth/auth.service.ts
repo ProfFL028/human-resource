@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {ApiController} from "../shared/api.controller";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {User} from "./user/user.entity";
+import {throwError} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -20,8 +21,22 @@ export class AuthService {
       })
     };
 
-    return this.http.post<User>(ApiController.AUTH_URL, "1", httpOptions);
+    return this.http.post<User>(ApiController.AUTH_URL, "1", httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = '未知错误';
+    console.log(errorRes.status);
+    switch (errorRes.status) {
+      case 401:
+        errorMessage = "用户名或密码错误"
+        break;
+      case 404:
+        errorMessage = "未找到此页面"
+        break;
+    }
+    return throwError(errorMessage);
   }
 }

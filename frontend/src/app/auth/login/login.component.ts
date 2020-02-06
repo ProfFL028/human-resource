@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.tellerNumberController.value, this.passwordController.value).subscribe(
       data => {
         this.isLoading = false;
-        this.error = ""
-        this.router.navigate(["/home"]).then(r => {
+        this.error = "";
+        this.router.navigate(["/dashboard"]).then(r => {
         })
       },
       error => {

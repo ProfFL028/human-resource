@@ -14,8 +14,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatSliderModule} from "@angular/material/slider";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from "@angular/material/input";
-import { HomepageComponent } from './homepage/homepage.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -24,22 +24,22 @@ import { LoadingComponent } from './shared/loading/loading.component';
     UserListComponent,
     UserComponent,
     LoginComponent,
-    HomepageComponent,
     LoadingComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FormsModule,
-    HttpClientModule,
-    MatCardModule,
-    MatFormFieldModule,
-    ReactiveFormsModule,
-    MatSliderModule,
-    BrowserAnimationsModule,
-    MatInputModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        FormsModule,
+        HttpClientModule,
+        MatCardModule,
+        MatFormFieldModule,
+        ReactiveFormsModule,
+        MatSliderModule,
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

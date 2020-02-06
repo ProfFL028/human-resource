@@ -1,15 +1,18 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {ApiController} from "../shared/api.controller";
-import {catchError, map} from "rxjs/operators";
+import {catchError, map, shareReplay} from "rxjs/operators";
 import {User} from "./user/user.entity";
-import {throwError} from "rxjs";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser$: Observable<User>;
 
   constructor(private http: HttpClient) {
-
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
   login(username: string, password: string) {
@@ -22,6 +25,12 @@ export class AuthService {
     };
 
     return this.http.post<User>(ApiController.AUTH_URL, "1", httpOptions).pipe(
+      shareReplay(),
+      map(user=> {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+      }),
       catchError(this.handleError)
     );
   }

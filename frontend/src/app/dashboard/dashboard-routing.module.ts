@@ -9,6 +9,16 @@ import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {HomepageComponent} from "./homepage/homepage.component";
 import {SystemUserComponent} from "./system-user/system-user.component";
 import {AuthGuard} from "../shared/guard/auth.guard";
+import {SystemUserService} from "./system-user/system-user.service";
+import {SystemDeptComponent} from "./system-dept/system-dept.component";
+import {SystemRoleComponent} from './system-role/system-role.component';
+import {SystemPositionComponent} from './system-position/system-position.component';
+import {SystemRoleService} from "./system-role/system-role.service";
+import { SystemRoleDetailComponent } from './system-role/system-role-detail/system-role-detail.component';
+import {LoadingComponent} from "../shared/loading/loading.component";
+import {LoadingRoutingModule} from "../shared/loading/loading-routing.module";
+import {TableModule} from "primeng";
+import {MatInputModule} from "@angular/material/input";
 
 export const LayoutRoutes: Routes = [
   {
@@ -17,10 +27,11 @@ export const LayoutRoutes: Routes = [
     children: [
       {path: '', redirectTo: 'homepage', pathMatch: 'prefix'},
       {path: 'homepage', component: HomepageComponent, pathMatch: 'full'},
-      {path: 'system-user', component: SystemUserComponent, canActivate: [AuthGuard], data: {roles: ["ROLE_ADMIN"]}}
+      {path: 'system-user', component: SystemUserComponent},//canActivate: [AuthGuard], data: {roles: ["ROLE_ADMIN"]}}
+      {path: 'system-role', component: SystemRoleComponent}
     ]
   }
-]
+];
 
 @NgModule({
   imports: [
@@ -28,19 +39,33 @@ export const LayoutRoutes: Routes = [
     RouterModule.forChild(LayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
-    NgbDropdownModule
+    NgbDropdownModule,
+    LoadingRoutingModule,
+    TableModule,
+    MatInputModule
   ],
   exports: [
-    RouterModule
+    RouterModule,
+    SystemRoleDetailComponent
   ],
   declarations: [
     LayoutComponent,
     HeaderComponent,
     SidebarComponent,
     HomepageComponent,
-    SystemUserComponent
+    SystemUserComponent,
+    SystemDeptComponent,
+    SystemRoleComponent,
+    SystemPositionComponent,
+    SystemRoleDetailComponent
   ],
-  providers: []
+  entryComponents: [
+    SystemRoleDetailComponent
+  ],
+  providers: [
+    SystemUserService,
+    SystemRoleService
+  ]
 })
 export class DashboardRoutingModule {
 

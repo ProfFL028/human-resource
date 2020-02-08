@@ -33,4 +33,8 @@ export class SidebarComponent implements OnInit {
     this.collapsedEvent.emit(this.collapsed);
   }
 
+  onLoggedout() {
+
+  }
+
 }

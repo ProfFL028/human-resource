@@ -10,13 +10,11 @@ import {map} from "rxjs/operators";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  user = new User()
 
   constructor(private authService: AuthService) {}
 
   onListUsers() {
     this.authService.login("9712152", "9712152@smls").subscribe(data => {
-      this.user = data
     })
   }
 }

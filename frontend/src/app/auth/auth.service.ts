@@ -4,6 +4,7 @@ import {ApiController} from "../shared/api.controller";
 import {catchError, map, shareReplay} from "rxjs/operators";
 import {User} from "./user/user.entity";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
+import {LocalStorageStrings} from "../shared/local-storage.strings";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
   public currentUser$: Observable<User>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem(LocalStorageStrings.CURRENT_USER)));
     this.currentUser$ = this.currentUserSubject.asObservable();
   }
 
@@ -27,8 +28,8 @@ export class AuthService {
     return this.http.post<User>(ApiController.AUTH_URL, "1", httpOptions).pipe(
       shareReplay(),
       map(user=> {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem('currentUser', JSON.stringify(user));
+        localStorage.setItem(LocalStorageStrings.IS_LOGGED_IN, "true");
+        localStorage.setItem(LocalStorageStrings.CURRENT_USER, JSON.stringify(user));
         this.currentUserSubject.next(user);
       }),
       catchError(this.handleError)

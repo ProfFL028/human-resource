@@ -1,1 +1,24 @@
-<p>system-user works!</p>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">柜员号</th>
+    <th scope="col">姓名</th>
+    <th scope="col">电话</th>
+    <th scope="col">自动登陆ip</th>
+    <th scope="col">部门</th>
+    <th scope="col">岗位</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let systemUser of systemUsers; index as i">
+    <td>{{i + 1}}</td>
+    <td>{{systemUser.tellerNumber}}</td>
+    <td>{{systemUser.name}}</td>
+    <td>{{systemUser.telephone}}</td>
+    <td>{{systemUser.autoLoginIp}}</td>
+    <td>{{systemUser.dept.name}}({{systemUser.dept.deptNumber}})</td>
+    <td>{{systemUser.position.name}}</td>
+  </tr>
+  </tbody>
+</table>

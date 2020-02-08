@@ -5,7 +5,8 @@ abstract class ApiController {
         private const val API_PATH = "/api/v1"
 
         const val AUTHENTICATE_URL: String = "$API_PATH/auth"
-        const val STUFF_URL: String = "$API_PATH/stuff"
+        const val SYSTEM_USER_URL: String = "$API_PATH/user"
+        const val SYSTEM_ROLE_URL: String = "$API_PATH/role"
 
         // Spring Boot Actuator services
         const val AUTOCONFIG_ENDPOINT = "/autoconfig"

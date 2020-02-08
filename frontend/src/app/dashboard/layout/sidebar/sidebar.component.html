@@ -2,15 +2,15 @@
   <div class="list-group">
     <a routerLink="/dashboard/homepage" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-fw fa-dashboard"></i>&nbsp;
-      <span>{{ 'HomePage'}}</span>
+      <span>主页</span>
     </a>
     <a [routerLink]="['/dashboard/system-user']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
       <span>用户管理</span>
     </a>
-    <a [routerLink]="['/tables']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+    <a [routerLink]="['/dashboard/system-role']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-fw fa-table"></i>&nbsp;
-      <span>{{ 'Tables'}}</span>
+      <span>角色管理</span>
     </a>
     <a [routerLink]="['/forms']" [routerLinkActive]="['router-link-active']" class="list-group-item">
       <i class="fa fa-fw fa-edit"></i>&nbsp;

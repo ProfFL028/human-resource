@@ -4,7 +4,8 @@ export class ApiController {
   public static readonly API_BASE = "api/v1";
 
   public static readonly AUTH_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/auth";
-  public static readonly USER_API_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/users";
+  public static readonly USER_API_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/user";
+  public static readonly ROLE_API_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/role";
 
 
 }

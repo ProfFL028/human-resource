@@ -1,0 +1,27 @@
+<div class="row" style="margin-bottom: 15px;">
+  <button class="btn btn-primary" style="margin-left: 15px;" (click)="onAdd()">新增</button>
+</div>
+
+<app-loading *ngIf="isLoading$ | async"></app-loading>
+
+<p-table *ngIf="!(isLoading$ | async)" [value]="systemRoles$ | async" (onRowSelect)="onRowSelected($event)">
+  <ng-template pTemplate="header">
+    <tr>
+    <th scope="col">操作</th>
+    <th scope="col">#</th>
+    <th scope="col">角色名</th>
+    <th scope="col">排序号</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-systemRole>
+    <tr [pSelectableRow]="systemRole">
+      <td>
+        <button class="btn btn-warning" (click)="onEdit(systemRole)">修改</button>
+        <button class="btn btn-danger" style="margin-left: 5px" (click)="onDelete(systemRole.id)">删除</button>
+      </td>
+      <td>{{systemRole.id}}</td>
+      <td>{{systemRole.name}}</td>
+      <td>{{systemRole.sortNumber}}</td>
+    </tr>
+  </ng-template>
+</p-table>

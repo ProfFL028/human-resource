@@ -9,12 +9,12 @@ class SystemUserController(
         val systemUserRepository: SystemUserRepository
 ) {
 
-    @GetMapping("/users")
-    fun getUsers(): List<SystemUser> {
-        return this.systemUserRepository.findAll() as List<SystemUser>
+    @GetMapping(ApiController.SYSTEM_USER_URL)
+    fun getUsers(): Iterable<SystemUser> {
+        return this.systemUserRepository.findAll()
     }
 
-    @PostMapping("/users")
+    @PostMapping(ApiController.SYSTEM_USER_URL)
     fun addUser(@RequestBody user: SystemUser) {
         this.systemUserRepository.save(user)
     }

@@ -25,7 +25,7 @@ export class SystemRoleComponent implements OnInit {
   }
 
   onAdd() {
-    this.openDialog(null);
+    this.openDialog(new SystemRole());
   }
 
   onEdit(systemRole: SystemRole) {

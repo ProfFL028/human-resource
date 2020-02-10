@@ -3,20 +3,21 @@
     <div class="ui-g-12">
       <mat-form-field style="width: 100%">
         <mat-label>角色名：</mat-label>
-        <input id="name" matInput [value]="systemRole.name" autofocus>
+        <input id="name" name="name"  matInput [(ngModel)]="systemRole.name" required autofocus placeholder="请输入角色名">
+        <mat-error>角色名不能为空</mat-error>
       </mat-form-field>
     </div>
 
     <div class="ui-g-12">
       <mat-form-field style="width: 100%">
         <mat-label>排序号：</mat-label>
-        <input id="sortNumber" matInput [value]="systemRole.sortNumber" autofocus>
+        <input id="sortNumber" name="sortNumber" ngModel matInput [(ngModel)]="systemRole.sortNumber" autofocus>
       </mat-form-field>
     </div>
 
     <div class="ui-dialog-buttonpane ui-helper-clearfix">
       <button class="btn btn-primary" (click)="onSubmit()">提交</button>
-      <button class="btn btn-warning" (click)="onCancel()">取消</button>
+      <button class="btn btn-warning" style="margin-left: 10px;" (click)="onCancel()">取消</button>
     </div>
   </div>
 </form>

@@ -66,7 +66,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         val corsConfiguration = CorsConfiguration()
         corsConfiguration.allowedOrigins = listOf("http://localhost:4200")
         corsConfiguration.allowedHeaders = listOf("*")
-        corsConfiguration.allowedMethods = listOf("GET", "POST")
+        corsConfiguration.allowedMethods = listOf("GET", "POST", "DELETE")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", corsConfiguration)
         return source

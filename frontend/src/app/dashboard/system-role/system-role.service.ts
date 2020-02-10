@@ -30,12 +30,15 @@ export class SystemRoleService {
       result => {
         this._systemRole$.next(result);
         this._loading$.next(false);
+        this.findAll();
       }
     );
   }
 
   delete(id: number) {
-    return this.http.delete(ApiController + "/" + id).pipe(shareReplay(), catchError(this.handleError)).subscribe();
+    return this.http.delete(ApiController.ROLE_API_URL + "/" + id).pipe(shareReplay(), catchError(this.handleError)).subscribe( result=>{
+      this.findAll();
+    });
   }
 
   private handleError(errorRes: HttpErrorResponse) {

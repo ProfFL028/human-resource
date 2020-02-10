@@ -1,5 +1,5 @@
 export class SystemRole {
   id: number;
-  name: string;
-  sortNumber: number;
+  name: string = "";
+  sortNumber: number = 999;
 }

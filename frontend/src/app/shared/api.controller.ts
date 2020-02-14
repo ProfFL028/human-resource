@@ -6,6 +6,7 @@ export class ApiController {
   public static readonly AUTH_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/auth";
   public static readonly USER_API_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/user";
   public static readonly ROLE_API_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/role";
+  public static readonly POSITION_API_URL = ApiController.BACKEND_URL + ApiController.API_BASE + "/position";
 
 
 }

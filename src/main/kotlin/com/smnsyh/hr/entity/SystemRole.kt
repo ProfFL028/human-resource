@@ -15,9 +15,12 @@ data class SystemRole(
         val name: String,
 
         @Column(name = "sort_number")
-        val sortNumber: Int = 999
+        val sortNumber: Int = 999,
+
+        @Column(name = "status")
+        val status: Boolean = true
 ) : Comparable<SystemRole> {
-    constructor() : this(0, "", 999)
+    constructor() : this(0, "", 999, true)
 
     override fun compareTo(other: SystemRole): Int {
         return sortNumber.compareTo(other.sortNumber)

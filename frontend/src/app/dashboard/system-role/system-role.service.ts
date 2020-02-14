@@ -1,6 +1,6 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ApiController} from "../../shared/api.controller";
-import {catchError, shareReplay} from "rxjs/operators";
+import {catchError, shareReplay, tap} from "rxjs/operators";
 import {SystemRole} from "./system-role.entity";
 import {BehaviorSubject, of, throwError} from "rxjs";
 import {Injectable} from "@angular/core";
@@ -15,28 +15,37 @@ export class SystemRoleService {
   }
 
   findAll() {
-    this._loading$.next(true);
-    return this.http.get<SystemRole[]>(ApiController.ROLE_API_URL).pipe(shareReplay(), catchError(this.handleError)).subscribe(
-      result => {
-        this._systemRoles$.next(result);
-        this._loading$.next(false);
-      }
-    );
+    return this.http.get<SystemRole[]>(ApiController.ROLE_API_URL).pipe(shareReplay(),
+      tap(() => {
+        this._loading$.next(true);
+      }),
+      catchError(this.handleError)).subscribe(data => {
+      this._systemRoles$.next(data);
+      this._loading$.next(false);
+    });
   }
 
   save(systemRole: SystemRole) {
-    this._loading$.next(true);
-    return this.http.post<SystemRole>(ApiController.ROLE_API_URL, systemRole).pipe(shareReplay(), catchError(this.handleError)).subscribe(
-      result => {
-        this._systemRole$.next(result);
+    return this.http.post<SystemRole>(ApiController.ROLE_API_URL, systemRole).pipe(shareReplay(),
+      tap(data => {
+        this._loading$.next(true);
+      }),
+      catchError(this.handleError)).subscribe(
+      data => {
+        this._systemRole$.next(data);
         this._loading$.next(false);
         this.findAll();
-      }
-    );
+      });
   }
 
   delete(id: number) {
-    return this.http.delete(ApiController.ROLE_API_URL + "/" + id).pipe(shareReplay(), catchError(this.handleError)).subscribe( result=>{
+    return this.http.delete(ApiController.ROLE_API_URL + "/" + id).pipe(shareReplay(),
+      tap(data => {
+        this._loading$.next(true);
+      }),
+      catchError(this.handleError)).subscribe(data => {
+      this._systemRole$.next(data);
+      this._loading$.next(false);
       this.findAll();
     });
   }

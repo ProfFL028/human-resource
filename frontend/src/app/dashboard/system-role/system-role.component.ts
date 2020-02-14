@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SystemRole} from "./system-role.entity";
 import {SystemRoleService} from "./system-role.service";
 import {Observable} from "rxjs";
@@ -14,10 +14,12 @@ import {DialogService} from "primeng";
 export class SystemRoleComponent implements OnInit {
   isLoading$: Observable<boolean>;
   systemRoles$: Observable<SystemRole[]>;
+  systemRole$: Observable<SystemRole>;
 
   constructor(private systemRoleService: SystemRoleService, private dialogService: DialogService) {
     this.isLoading$ = systemRoleService._loading$.asObservable();
     this.systemRoles$ = systemRoleService._systemRoles$.asObservable();
+    this.systemRole$ = systemRoleService._systemRole$.asObservable();
   }
 
   ngOnInit() {
@@ -37,7 +39,6 @@ export class SystemRoleComponent implements OnInit {
   }
 
   onRowSelected(event) {
-
   }
 
   private openDialog(systemRole: SystemRole) {

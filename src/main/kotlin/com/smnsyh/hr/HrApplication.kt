@@ -46,8 +46,8 @@ class HrApplication {
         systemDeptRepository.save(dept4)
         systemDeptRepository.save(dept5)
 
-        val role1 = SystemRole(1, "ROLE_USER", 1)
-        val role2 = SystemRole(2, "ROLE_MANAGER", 1)
+        val role1 = SystemRole(1, "ROLE_USER", 1, true)
+        val role2 = SystemRole(2, "ROLE_MANAGER", 1, true)
         systemRoleRepository.save(role1)
         systemRoleRepository.save(role2)
 

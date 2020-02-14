@@ -13,7 +13,10 @@ data class SystemPosition(
         val name: String,
 
         @Column
-        val sort_number: Int = 999
+        val sort_number: Int = 999,
+
+        @Column
+        val status: Boolean = true
 ) {
-    constructor() : this(0, "", 999)
+    constructor() : this(0, "", 999, true)
 }

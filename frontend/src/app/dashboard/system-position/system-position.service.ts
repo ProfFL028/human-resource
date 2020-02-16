@@ -7,19 +7,17 @@ import {catchError, shareReplay, tap} from "rxjs/operators";
 
 @Injectable()
 export class SystemPositionService {
-   _loading$ = new BehaviorSubject<boolean>(true);
-   _systemPositions$ = new BehaviorSubject<SystemPosition[]>([]);
-   _systemPosition$ = new BehaviorSubject<SystemPosition>(null);
+  _loading$ = new BehaviorSubject<boolean>(true);
+  _systemPositions$ = new BehaviorSubject<SystemPosition[]>([]);
+  _systemPosition$ = new BehaviorSubject<SystemPosition>(null);
 
   constructor(public http: HttpClient) {
   }
 
   findAll() {
+    this._loading$.next(true);
     return this.http.get<SystemPosition[]>(ApiController.POSITION_API_URL).pipe(
-      shareReplay(),
-      tap(()=> {
-        this._loading$.next(true);
-      })
+      shareReplay()
     ).subscribe(
       data => {
         this._systemPositions$.next(data);
@@ -29,11 +27,9 @@ export class SystemPositionService {
   }
 
   save(systemPosition: SystemPosition) {
+    this._loading$.next(true);
     return this.http.post<SystemPosition>(ApiController.POSITION_API_URL, systemPosition).pipe(
-      shareReplay(),
-      tap(()=> {
-        this._loading$.next(true);
-      })
+      shareReplay()
     ).subscribe(
       data => {
         this._systemPosition$.next(data);
@@ -43,11 +39,9 @@ export class SystemPositionService {
   }
 
   delete(id: number) {
+    this._loading$.next(true);
     return this.http.delete(ApiController.POSITION_API_URL + "/" + id).pipe(
-      shareReplay(),
-      tap(()=> {
-        this._loading$.next(true);
-      })
+      shareReplay()
     ).subscribe(
       data => {
         this._systemPosition$.next(null);

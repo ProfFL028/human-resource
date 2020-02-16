@@ -51,10 +51,12 @@ class HrApplication {
         systemRoleRepository.save(role1)
         systemRoleRepository.save(role2)
 
-        val position1 = SystemPosition(1, "董事长")
-        val position2 = SystemPosition(2, "科员")
-        systemPositionRepository.save(position1)
-        systemPositionRepository.save(position2)
+        var position1 = SystemPosition(1, "董事长", 1, true)
+        var position2 = SystemPosition(2, "科员", 2, true)
+        var position3 = SystemPosition(3, "科员2", 3, true)
+        position1 = systemPositionRepository.save(position1)
+        position2 = systemPositionRepository.save(position2)
+        systemPositionRepository.save(position3)
 
         val menu1 = SystemMenu(1, "系统管理", "#", "", 1, null, null)
         val menu2 = SystemMenu(2, "菜单管理", "/menu", "", 1, menu1, null)

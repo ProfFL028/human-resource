@@ -1,1 +1,37 @@
-<p>system-position works!</p>
+<div class="row" style="margin-bottom: 15px;">
+  <button class="btn btn-primary" style="margin-left: 15px;" (click)="onAdd()">新增</button>
+</div>
+
+<app-loading *ngIf="loading$ | async"></app-loading>
+
+<p-table *ngIf="!(loading$ | async)" [value]="systemPositions$ | async" (onRowSelect)="onRowSelected($event)">
+  <ng-template pTemplate="header">
+    <tr>
+      <th scope="col">操作</th>
+      <th scope="col">#</th>
+      <th scope="col">岗位名</th>
+      <th scope="col">排序号</th>
+      <th scope="col">状态</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-systemPosition>
+    <tr [pSelectableRow]="systemPosition" [ngClass]='systemPosition?.status ? "" : "not-valid"'>
+      <td>
+        <button class="btn btn-warning" (click)="onEdit(systemPosition)">修改</button>
+        <button class="btn btn-danger" style="margin-left: 5px" (click)="onDelete(systemPosition.id)">删除</button>
+      </td>
+      <td>{{systemPosition.id}}</td>
+      <td>{{systemPosition.name}}</td>
+      <td>{{systemPosition.sortNumber}}</td>
+      <td>{{systemPosition?.status ? "启用": "未启用"}}</td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-dialog header="{{dialogTitle}}" [(visible)]="isEditing" [focusOnShow]="false" [responsive]="true" [modal]="true">
+  <app-system-position-detail
+    [systemPosition]="systemPosition$ | async"
+    (onCancelClick)="onCancel()"
+    (onSubmitClick)="onSubmit()">
+  </app-system-position-detail>
+</p-dialog>

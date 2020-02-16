@@ -8,17 +8,18 @@ import {SidebarComponent} from "./layout/sidebar/sidebar.component";
 import {NgbDropdownModule} from "@ng-bootstrap/ng-bootstrap";
 import {HomepageComponent} from "./homepage/homepage.component";
 import {SystemUserComponent} from "./system-user/system-user.component";
-import {AuthGuard} from "../shared/guard/auth.guard";
 import {SystemUserService} from "./system-user/system-user.service";
 import {SystemDeptComponent} from "./system-dept/system-dept.component";
 import {SystemRoleComponent} from './system-role/system-role.component';
 import {SystemPositionComponent} from './system-position/system-position.component';
 import {SystemRoleService} from "./system-role/system-role.service";
-import { SystemRoleDetailComponent } from './system-role/system-role-detail/system-role-detail.component';
-import {LoadingComponent} from "../shared/loading/loading.component";
+import {SystemRoleDetailComponent} from './system-role/system-role-detail/system-role-detail.component';
 import {LoadingRoutingModule} from "../shared/loading/loading-routing.module";
-import {TableModule} from "primeng";
+import {DialogModule, TableModule} from "primeng";
 import {MatInputModule} from "@angular/material/input";
+import {SystemPositionService} from "./system-position/system-position.service";
+import {SystemPositionDetailComponent} from './system-position/system-position-detail/system-position-detail.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 export const LayoutRoutes: Routes = [
   {
@@ -28,7 +29,8 @@ export const LayoutRoutes: Routes = [
       {path: '', redirectTo: 'homepage', pathMatch: 'prefix'},
       {path: 'homepage', component: HomepageComponent, pathMatch: 'full'},
       {path: 'system-user', component: SystemUserComponent},//canActivate: [AuthGuard], data: {roles: ["ROLE_ADMIN"]}}
-      {path: 'system-role', component: SystemRoleComponent}
+      {path: 'system-role', component: SystemRoleComponent},
+      {path: 'system-position', component: SystemPositionComponent}
     ]
   }
 ];
@@ -42,7 +44,9 @@ export const LayoutRoutes: Routes = [
     NgbDropdownModule,
     LoadingRoutingModule,
     TableModule,
-    MatInputModule
+    MatInputModule,
+    DialogModule,
+    MatCheckboxModule
   ],
   exports: [
     RouterModule,
@@ -57,14 +61,16 @@ export const LayoutRoutes: Routes = [
     SystemDeptComponent,
     SystemRoleComponent,
     SystemPositionComponent,
-    SystemRoleDetailComponent
+    SystemRoleDetailComponent,
+    SystemPositionDetailComponent
   ],
   entryComponents: [
     SystemRoleDetailComponent
   ],
   providers: [
     SystemUserService,
-    SystemRoleService
+    SystemRoleService,
+    SystemPositionService
   ]
 })
 export class DashboardRoutingModule {

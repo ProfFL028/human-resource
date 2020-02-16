@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {SystemRole} from "../system-role.entity";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng";
@@ -9,7 +9,7 @@ import {DynamicDialogConfig, DynamicDialogRef} from "primeng";
   styleUrls: ['./system-role-detail.component.css']
 })
 export class SystemRoleDetailComponent implements OnInit {
-  systemRole: SystemRole;
+  @Input() systemRole: SystemRole;
 
   constructor(public ref: DynamicDialogRef, public config: DynamicDialogConfig) {
     this.systemRole = this.config.data.systemRole;

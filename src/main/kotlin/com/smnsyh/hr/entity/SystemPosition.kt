@@ -1,9 +1,7 @@
 package com.smnsyh.hr.entity
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
+import org.hibernate.annotations.Sort
+import javax.persistence.*
 
 @Entity(name = "system_position")
 data class SystemPosition(

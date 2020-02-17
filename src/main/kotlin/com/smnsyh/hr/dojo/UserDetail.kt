@@ -22,7 +22,7 @@ data class UserDetail(
                 userDetail.tellerNumber = systemUser.tellerNumber
                 userDetail.name = systemUser.name
                 userDetail.telephone = systemUser.telephone
-                userDetail.deptName = systemUser.dept?.name ?: ""
+                userDetail.deptName = systemUser.dept?.shortName ?: ""
                 userDetail.autoLoginIp = systemUser.autoLoginIp
                 userDetail.positionName = systemUser.position?.name ?: ""
             }

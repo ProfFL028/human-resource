@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*
 class SystemPositionController(val systemPositionRepository: SystemPositionRepository) {
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL)
-    fun findAll(): Iterable<SystemPosition> {
-        return this.systemPositionRepository.findAll();
+    fun findAll(): List<SystemPosition> {
+        return this.systemPositionRepository.findAllByOrderBySortNumber()
     }
 
     @PostMapping(ApiController.SYSTEM_POSITION_URL)

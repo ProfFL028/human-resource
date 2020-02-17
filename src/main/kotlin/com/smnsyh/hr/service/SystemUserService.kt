@@ -18,5 +18,6 @@ class SystemUserService {
     @Autowired
     private lateinit var systemUserRepository: SystemUserRepository
 
+
 }
 

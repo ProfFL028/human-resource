@@ -5,4 +5,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface SystemPositionRepository : CrudRepository<SystemPosition, Short>
+interface SystemPositionRepository : CrudRepository<SystemPosition, Short> {
+    fun findAllByOrderBySortNumber(): List<SystemPosition>
+}

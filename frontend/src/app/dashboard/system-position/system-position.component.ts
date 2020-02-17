@@ -16,19 +16,19 @@ export class SystemPositionComponent implements OnInit {
   isEditing = false;
 
   constructor(private systemPositionService: SystemPositionService) {
-    this.loading$ = systemPositionService._loading$.asObservable();
-    this.systemPosition$ = systemPositionService._systemPosition$.asObservable();
-    this.systemPositions$ = systemPositionService._systemPositions$.asObservable();
+    this.loading$ = systemPositionService.loading$;
+    this.systemPosition$ = systemPositionService.systemPosition$;
+    this.systemPositions$ = systemPositionService.systemPositions$;
   }
 
   ngOnInit() {
-    this.systemPositionService.findAll();
+    this.reloadPage();
   }
 
   onAdd() {
     this.dialogTitle = "新增岗位";
     this.isEditing = true;
-    this.systemPositionService._systemPosition$.next(new SystemPosition());
+    this.systemPositionService.nextSystemPosition(new SystemPosition());
   }
 
   onRowSelected(event) {
@@ -38,19 +38,24 @@ export class SystemPositionComponent implements OnInit {
   onEdit(systemPosition: SystemPosition) {
     this.dialogTitle = `修改岗位：${systemPosition.name}`;
     this.isEditing = true;
-    this.systemPositionService._systemPosition$.next(systemPosition);
+    this.systemPositionService.nextSystemPosition(systemPosition);
   }
 
   onDelete(id: number) {
-    this.isEditing = false;
+    this.reloadPage();
   }
 
   onSubmit() {
-    this.isEditing = false;
+    this.reloadPage();
   }
 
   onCancel() {
     this.isEditing = false;
+  }
+
+  private reloadPage() {
+    this.isEditing = false;
+    this.systemPositionService.findAll();
   }
 
 }

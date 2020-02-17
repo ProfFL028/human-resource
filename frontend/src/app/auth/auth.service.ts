@@ -38,7 +38,7 @@ export class AuthService {
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = '未知错误';
-    console.log(errorRes.status);
+    console.log(errorRes);
     switch (errorRes.status) {
       case 401:
         errorMessage = "用户名或密码错误"

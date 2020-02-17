@@ -1,6 +1,6 @@
 export class SystemPosition {
   id: number;
   name: string;
-  sortNumber: number;
-  status: boolean;
+  sortNumber: number = 999;
+  status: boolean = true;
 }

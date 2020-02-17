@@ -7,9 +7,23 @@ import {catchError, shareReplay, tap} from "rxjs/operators";
 
 @Injectable()
 export class SystemPositionService {
-  _loading$ = new BehaviorSubject<boolean>(true);
-  _systemPositions$ = new BehaviorSubject<SystemPosition[]>([]);
-  _systemPosition$ = new BehaviorSubject<SystemPosition>(null);
+  private _loading$ = new BehaviorSubject<boolean>(true);
+  private _systemPositions$ = new BehaviorSubject<SystemPosition[]>([]);
+  private _systemPosition$ = new BehaviorSubject<SystemPosition>(new SystemPosition());
+
+  get loading$() {
+    return this._loading$.asObservable();
+  }
+  get systemPosition$() {
+    return this._systemPosition$.asObservable();
+  }
+  get systemPositions$() {
+    return this._systemPositions$.asObservable();
+  }
+
+  nextSystemPosition(systemPosition: SystemPosition) {
+    this._systemPosition$.next(systemPosition);
+  }
 
   constructor(public http: HttpClient) {
   }
@@ -34,6 +48,7 @@ export class SystemPositionService {
       data => {
         this._systemPosition$.next(data);
         this._loading$.next(false);
+        this.findAll();
       }
     )
   }
@@ -46,6 +61,7 @@ export class SystemPositionService {
       data => {
         this._systemPosition$.next(null);
         this._loading$.next(false);
+        this.findAll();
       }
     )
   }

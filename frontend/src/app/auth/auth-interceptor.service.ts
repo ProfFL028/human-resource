@@ -8,11 +8,14 @@ import { Injectable } from "@angular/core";
 export class AuthInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const user: User = JSON.parse(localStorage.getItem(LocalStorageStrings.CURRENT_USER));
-    const requestWithToken = req.clone({
-      headers: req.headers.append("X-Auth-Token", user.token)
-    });
+    if(user != undefined) {
+      const requestWithToken = req.clone({
+        headers: req.headers.append("X-Auth-Token", user.token)
+      });
 
-    return next.handle(requestWithToken);
+      return next.handle(requestWithToken);
+    }
+    return next.handle(req);
   }
 
 }

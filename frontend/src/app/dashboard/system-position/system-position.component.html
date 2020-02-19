@@ -28,7 +28,7 @@
   </ng-template>
 </p-table>
 
-<p-dialog header="{{dialogTitle}}" [(visible)]="isEditing" [focusOnShow]="false" [responsive]="true" [modal]="true">
+<p-dialog header="{{dialogTitle}}" [(visible)]="isEditing" [focusOnShow]="false" [modal]="true">
   <app-system-position-detail
     [systemPosition]="systemPosition$ | async"
     (onCancelClick)="onCancel()"

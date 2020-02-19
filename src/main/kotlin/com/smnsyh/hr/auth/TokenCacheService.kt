@@ -47,6 +47,7 @@ class TokenCacheService {
 
     fun retrieve(token: String): Authentication? {
         if (contains(token)) {
+            restApiAuthTokenCachedTime[token] = LocalDateTime.now()
             return restApiAuthTokenCache[token];
         }
         return null

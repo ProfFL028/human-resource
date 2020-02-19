@@ -23,6 +23,7 @@ export class SystemPositionComponent implements OnInit {
 
   ngOnInit() {
     this.reloadPage();
+    this.systemPositionService.findAll()
   }
 
   onAdd() {
@@ -55,7 +56,6 @@ export class SystemPositionComponent implements OnInit {
 
   private reloadPage() {
     this.isEditing = false;
-    this.systemPositionService.findAll();
   }
 
 }

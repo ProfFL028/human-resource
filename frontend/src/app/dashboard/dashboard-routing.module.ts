@@ -15,11 +15,13 @@ import {SystemPositionComponent} from './system-position/system-position.compone
 import {SystemRoleService} from "./system-role/system-role.service";
 import {SystemRoleDetailComponent} from './system-role/system-role-detail/system-role-detail.component';
 import {LoadingRoutingModule} from "../shared/loading/loading-routing.module";
-import {DialogModule, TableModule} from "primeng";
+import {DialogModule, TableModule, TreeTableModule} from "primeng"
 import {MatInputModule} from "@angular/material/input";
 import {SystemPositionService} from "./system-position/system-position.service";
 import {SystemPositionDetailComponent} from './system-position/system-position-detail/system-position-detail.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {SystemDeptService} from "./system-dept/system-dept.service";
+import { SystemDeptDetailComponent } from './system-dept/system-dept-detail/system-dept-detail.component';
 
 export const LayoutRoutes: Routes = [
   {
@@ -30,7 +32,8 @@ export const LayoutRoutes: Routes = [
       {path: 'homepage', component: HomepageComponent, pathMatch: 'full'},
       {path: 'system-user', component: SystemUserComponent},//canActivate: [AuthGuard], data: {roles: ["ROLE_ADMIN"]}}
       {path: 'system-role', component: SystemRoleComponent},
-      {path: 'system-position', component: SystemPositionComponent}
+      {path: 'system-position', component: SystemPositionComponent},
+      {path: 'system-dept', component: SystemDeptComponent}
     ]
   }
 ];
@@ -46,7 +49,8 @@ export const LayoutRoutes: Routes = [
     TableModule,
     MatInputModule,
     DialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    TreeTableModule
   ],
   exports: [
     RouterModule,
@@ -62,7 +66,8 @@ export const LayoutRoutes: Routes = [
     SystemRoleComponent,
     SystemPositionComponent,
     SystemRoleDetailComponent,
-    SystemPositionDetailComponent
+    SystemPositionDetailComponent,
+    SystemDeptDetailComponent
   ],
   entryComponents: [
     SystemRoleDetailComponent
@@ -70,7 +75,8 @@ export const LayoutRoutes: Routes = [
   providers: [
     SystemUserService,
     SystemRoleService,
-    SystemPositionService
+    SystemPositionService,
+    SystemDeptService
   ]
 })
 export class DashboardRoutingModule {

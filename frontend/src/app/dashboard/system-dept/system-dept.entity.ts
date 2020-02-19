@@ -1,7 +1,8 @@
 export class SystemDept {
   id: number;
-  name: string;
+  fullName: string;
+  shortName: String;
   deptNumber: string;
   sortNumber: string;
-  parent: SystemDept;
+  children?: SystemDept[];
 }

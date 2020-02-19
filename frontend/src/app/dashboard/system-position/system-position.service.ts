@@ -59,7 +59,7 @@ export class SystemPositionService {
       shareReplay()
     ).subscribe(
       data => {
-        this._systemPosition$.next(null);
+        this._systemPosition$.next(new SystemPosition());
         this._loading$.next(false);
         this.findAll();
       }

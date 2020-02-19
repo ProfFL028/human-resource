@@ -1,6 +1,6 @@
 package com.smnsyh.hr.service
 
-import com.smnsyh.hr.dojo.SystemDeptTree
+import com.smnsyh.hr.dojo.SystemDeptTreeNode
 import com.smnsyh.hr.repository.SystemDeptRepository
 import org.springframework.stereotype.Service
 
@@ -8,10 +8,15 @@ import org.springframework.stereotype.Service
 class SystemDeptService(
         var systemDeptRepository: SystemDeptRepository
 ) {
-    fun getDeptTree(): Iterable<SystemDeptTree> {
-        var systemDeptTree = ArrayList<SystemDeptTree>()
+    fun getDeptTree(): Iterable<SystemDeptTreeNode> {
+        var systemDeptTree = ArrayList<SystemDeptTreeNode>()
+
         var systemDepts = systemDeptRepository.findAll()
-        systemDeptTree.add(SystemDeptTree(systemDepts))
+
+        for (systemDept in systemDepts) {
+
+        }
+        systemDeptTree.add(SystemDeptTreeNode(systemDepts))
 
         return systemDeptTree
     }

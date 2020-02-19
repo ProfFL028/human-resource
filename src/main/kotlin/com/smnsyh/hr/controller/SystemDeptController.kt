@@ -1,6 +1,6 @@
 package com.smnsyh.hr.controller
 
-import com.smnsyh.hr.dojo.SystemDeptTree
+import com.smnsyh.hr.dojo.SystemDeptTreeNode
 import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.repository.SystemDeptRepository
 import com.smnsyh.hr.service.SystemDeptService
@@ -13,7 +13,7 @@ class SystemDeptController(
 ) {
 
     @GetMapping(ApiController.SYSTEM_DEPT_URL)
-    fun findAll(): Iterable<SystemDeptTree> {
+    fun findAll(): Iterable<SystemDeptTreeNode> {
         return this.systemDeptService.getDeptTree()
     }
 

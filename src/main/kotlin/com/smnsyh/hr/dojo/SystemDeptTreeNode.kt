@@ -3,10 +3,10 @@ package com.smnsyh.hr.dojo
 import com.smnsyh.hr.entity.SystemDept
 import java.util.*
 
-class SystemDeptTree() {
+class SystemDeptTreeNode() {
     lateinit var data: SystemDeptTreeData
     var expanded = false
-    lateinit var children: MutableList<SystemDeptTree>
+    lateinit var children: MutableList<SystemDeptTreeNode>
 
     constructor(systemDept: SystemDept) : this() {
         data = SystemDeptTreeData(systemDept.deptNumber, systemDept.fullName, systemDept.shortName, systemDept.sortNumber)
@@ -18,7 +18,7 @@ class SystemDeptTree() {
             data = SystemDeptTreeData(systemDept.deptNumber, systemDept.fullName, systemDept.shortName, systemDept.sortNumber)
 
             children = ArrayList()
-            children.add(SystemDeptTree(systemDept))
+            children.add(SystemDeptTreeNode(systemDept))
         }
 
     }

@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import {SystemDeptService} from "../system-dept.service"
 import {SystemDept} from "../system-dept.entity"
 import {FormControl, FormGroup} from "@angular/forms"
+import {zh} from '../../../shared/locale-zh';
 
 @Component({
   selector: 'app-system-dept-detail',
@@ -13,15 +14,19 @@ export class SystemDeptDetailComponent implements OnInit {
   @Output() onSubmitClick = new EventEmitter<SystemDept>()
   @Output() onCancelClick = new EventEmitter()
 
+  myZH = zh
   form: FormGroup
   constructor(private systemDeptService: SystemDeptService) { }
 
   ngOnInit(): void {
+
     this.form = new FormGroup({
       deptNumber: new FormControl(this.systemDept.deptNumber),
       fullName: new FormControl(this.systemDept.fullName),
       shortName: new FormControl(this.systemDept.shortName),
-      sortNumber: new FormControl(this.systemDept.sortNumber)
+      sortNumber: new FormControl(this.systemDept.sortNumber),
+      beginDate: new FormControl(this.systemDept.beginDate),
+      endDate: new FormControl(this.systemDept.endDate)
     })
   }
 

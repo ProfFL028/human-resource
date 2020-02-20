@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.SortNatural
+import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
 
@@ -12,13 +13,13 @@ import javax.persistence.*
 data class SystemDept(
         @Id
         @GeneratedValue
-        val id: Short,
+        val id: Short = 0,
 
         @Column(name = "full_name")
-        val fullName: String,
+        val fullName: String = "",
 
         @Column(name = "short_name")
-        val shortName: String,
+        val shortName: String = "",
 
         @Column(name = "dept_number")
         val deptNumber: String = "",
@@ -26,22 +27,25 @@ data class SystemDept(
         @Column(name = "sort_number")
         val sortNumber: Int = 999,
 
+        @Column(name="begin_date")
+        val beginDate: LocalDate = LocalDate.now(),
+
+        @Column(name="end_date")
+        val endDate: LocalDate = LocalDate.MAX,
+
         @JsonBackReference
         @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], optional = true)
         @JoinColumn(name = "parent_id", nullable = true)
         @Fetch(FetchMode.SELECT)
         @Cascade(org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-        val parent: SystemDept?,
+        val parent: SystemDept? = null,
 
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
         @Fetch(FetchMode.SUBSELECT)
         @SortNatural
         @OrderBy("sortNumber ASC")
-        val children: SortedSet<SystemDept> = TreeSet<SystemDept>()
+        val children: Set<SystemDept> = TreeSet()
 ) : Comparable<SystemDept> {
-    constructor() : this(0, "", "", "", 999, null, TreeSet<SystemDept>())
-    constructor(id: Short, fullName: String, shortName: String, deptNumber: String, sort: Int, parent: SystemDept?) : this(id, fullName, shortName, deptNumber, sort, parent, TreeSet<SystemDept>())
-
     override fun compareTo(other: SystemDept): Int {
         return sortNumber.compareTo(other.sortNumber)
     }

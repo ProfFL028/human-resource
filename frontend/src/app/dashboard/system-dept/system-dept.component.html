@@ -5,14 +5,16 @@
 <app-loading *ngIf="isLoading$ | async"></app-loading>
 
 <p-treeTable *ngIf="!(isLoading$ | async)" [value]="systemDepts$ | async">
-  <ng-template pTemplate="header"></ng-template>
-  <tr>
-    <th>机构号</th>
-    <th>全称</th>
-    <th>简称</th>
-    <th>排序号</th>
-    <th>操作</th>
-  </tr>
+  <ng-template pTemplate="header">
+    <tr>
+      <th>机构号</th>
+      <th>全称</th>
+      <th>简称</th>
+      <th>排序号</th>
+      <th>有效期限</th>
+      <th>操作</th>
+    </tr>
+  </ng-template>
   <ng-template pTemplate="body" let-rowData="rowData" let-rowNode>
     <tr>
       <td>
@@ -22,6 +24,7 @@
       <td>{{rowData.fullName}}</td>
       <td>{{rowData.shortName}}</td>
       <td>{{rowData.sortNumber}}</td>
+      <td>{{rowData.beginDate | date:'yyyy年MM月dd日'}} - {{rowData.endDate |  date:'yyyy年MM月dd日'}}</td>
       <td>
         <button class="btn btn-warning" (click)="onEdit(rowData)">修改</button>
         <button class="btn btn-danger" style="margin-left: 5px" (click)="onDelete(rowData.id)">删除</button>
@@ -30,7 +33,7 @@
   </ng-template>
 </p-treeTable>
 
-<p-dialog [header]="dialogTitle" [(visible)]="isEditing" [modal]="true" >
+<p-dialog [header]="dialogTitle" [(visible)]="isEditing" [modal]="true" [style]="{width: '60vw'}" >
   <app-system-dept-detail
     [systemDept]="systemDept$ | async"
     (onSubmitClick)="onSubmit()"

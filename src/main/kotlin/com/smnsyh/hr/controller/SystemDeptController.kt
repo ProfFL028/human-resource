@@ -22,7 +22,7 @@ class SystemDeptController(
         return this.systemDeptRepository.save(systemDept);
     }
 
-    @DeleteMapping("${ApiController.SYSTEM_DEPT_URL}/{id}")
+    @DeleteMapping(ApiController.SYSTEM_DEPT_URL + "/{id}")
     fun delete(@PathVariable id: Short) {
         this.systemDeptRepository.deleteById(id)
     }

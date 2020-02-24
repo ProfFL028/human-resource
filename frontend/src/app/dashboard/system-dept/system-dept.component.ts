@@ -18,7 +18,7 @@ export class SystemDeptComponent implements OnInit {
   constructor(private systemDeptService: SystemDeptService) { }
 
   ngOnInit() {
-    this.systemDeptService.findAll()
+    this.systemDeptService.getSystemDeptTree()
   }
 
   onAdd() {

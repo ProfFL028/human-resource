@@ -1,10 +1,11 @@
 export class SystemDept {
   id: number;
   fullName: string;
-  shortName: String;
+  shortName: string;
   deptNumber: string;
   sortNumber: string;
   beginDate;
   endDate;
+  parent?: SystemDept;
   children?: SystemDept[];
 }

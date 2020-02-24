@@ -12,10 +12,17 @@ export class SystemDeptService {
   private _systemDept$ = new BehaviorSubject<SystemDept>(new SystemDept())
   private _systemDepts$ = new BehaviorSubject<TreeNode[]>([])
 
+  private _isOptionsLoading$ = new BehaviorSubject<boolean>(false)
+  private _systemDeptOptions$ = new BehaviorSubject<SystemDept[]>([])
+
   public systemDepts: TreeNode[]
 
   get isLoading$() {
     return this._isLoading$.asObservable()
+  }
+
+  get isOptionsLoading$() {
+    return this._isOptionsLoading$.asObservable()
   }
 
   get systemDept$() {
@@ -26,16 +33,31 @@ export class SystemDeptService {
     return this._systemDepts$.asObservable()
   }
 
+  get systemDeptOptions$() {
+    return this._systemDeptOptions$.asObservable()
+  }
+
   constructor(public http: HttpClient) {
   }
 
+  getSystemDeptOptions() {
+    this._isOptionsLoading$.next(true)
+    return this.http.get<SystemDept[]>(ApiController.DEPT_API_URL + "/options").pipe(
+      shareReplay()
+    ).subscribe(data => {
+      console.log("getSystemDeptOptions: " + data)
+      this._isOptionsLoading$.next(false)
+      this._systemDeptOptions$.next(data)
+    });
+  }
 
-  findAll() {
+
+  getSystemDeptTree() {
     this._isLoading$.next(true)
     return this.http.get<TreeNode[]>(ApiController.DEPT_API_URL).pipe(
       shareReplay()
     ).subscribe((data) => {
-      console.log(data)
+      console.log(" getSystemDeptTree : "  + data)
       this._isLoading$.next(false)
       this._systemDepts$.next(data)
 
@@ -49,7 +71,7 @@ export class SystemDeptService {
       shareReplay()
     ).subscribe(data => {
       this._systemDept$.next(data)
-      this.findAll()
+      this.getSystemDeptTree()
     })
   }
 
@@ -60,7 +82,7 @@ export class SystemDeptService {
     ).subscribe(
       data => {
         this._systemDept$.next(new SystemDept())
-        this.findAll()
+        this.getSystemDeptTree()
       }
     )
   }

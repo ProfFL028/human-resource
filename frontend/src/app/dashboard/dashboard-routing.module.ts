@@ -22,6 +22,7 @@ import {SystemPositionDetailComponent} from './system-position/system-position-d
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {SystemDeptService} from "./system-dept/system-dept.service";
 import { SystemDeptDetailComponent } from './system-dept/system-dept-detail/system-dept-detail.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete'
 
 export const LayoutRoutes: Routes = [
   {
@@ -52,7 +53,8 @@ export const LayoutRoutes: Routes = [
     MatCheckboxModule,
     TreeTableModule,
     CalendarModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    MatAutocompleteModule
   ],
   exports: [
     RouterModule,

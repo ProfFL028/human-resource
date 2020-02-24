@@ -17,6 +17,11 @@ class SystemDeptController(
         return this.systemDeptService.getDeptTree()
     }
 
+    @GetMapping(ApiController.SYSTEM_DEPT_URL + "/options")
+    fun findSystemDeptOptions(): Iterable<SystemDept> {
+        return this.systemDeptRepository.findAll()
+    }
+
     @PostMapping(ApiController.SYSTEM_DEPT_URL)
     fun save(@RequestBody systemDept: SystemDept) : SystemDept {
         return this.systemDeptRepository.save(systemDept);

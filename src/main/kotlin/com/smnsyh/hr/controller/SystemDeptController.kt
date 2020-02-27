@@ -24,6 +24,7 @@ class SystemDeptController(
 
     @PostMapping(ApiController.SYSTEM_DEPT_URL)
     fun save(@RequestBody systemDept: SystemDept) : SystemDept {
+        println(systemDept)
         return this.systemDeptRepository.save(systemDept);
     }
 

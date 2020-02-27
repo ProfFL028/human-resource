@@ -11,6 +11,7 @@ import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
 @Repository
+@Transactional
 interface SystemUserRepository : CrudRepository<SystemUser, String>, SystemUserRepositoryCustom {
     @Modifying
     @Query("update SystemUser set password=:password where username=:username")
@@ -23,7 +24,7 @@ interface SystemUserRepositoryCustom {
 }
 
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 class SystemUserRepositoryImpl : SystemUserRepositoryCustom {
     @PersistenceContext
     private lateinit var entityManager: EntityManager

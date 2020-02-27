@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
 import {SystemDeptService} from "./system-dept.service"
 import {SystemDept} from "./system-dept.entity"
 
@@ -13,7 +13,7 @@ export class SystemDeptComponent implements OnInit {
   systemDept$ = this.systemDeptService.systemDept$
 
   isEditing = false;
-  dialogTitle = "";
+  dialogTitle = '';
 
   constructor(private systemDeptService: SystemDeptService) { }
 
@@ -23,7 +23,7 @@ export class SystemDeptComponent implements OnInit {
 
   onAdd() {
     this.isEditing = true;
-    this.dialogTitle = "新增";
+    this.dialogTitle = '新增';
     this.systemDeptService.nextSystemDept(new SystemDept())
   }
 

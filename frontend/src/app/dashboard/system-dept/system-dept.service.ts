@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http"
 import {ApiController} from "../../shared/api.controller"
 import {shareReplay, tap} from "rxjs/operators"
 import {TreeNode} from "primeng"
+import {DateFormat} from '../../shared/date-format'
 
 @Injectable()
 export class SystemDeptService {
@@ -67,7 +68,18 @@ export class SystemDeptService {
 
   save(systemDept: SystemDept) {
     this._isLoading$.next(true)
-    return this.http.post<SystemDept>(ApiController.DEPT_API_URL, systemDept).pipe(
+    return this.http.post<SystemDept>(ApiController.DEPT_API_URL, {
+      id: systemDept.id,
+      fullName: systemDept.fullName,
+      shortName: systemDept.shortName,
+      deptNumber: systemDept.deptNumber,
+      sortNumber: systemDept.sortNumber,
+      beginDate: DateFormat.dateAsYYYYMMDD(systemDept.beginDate),
+      endDate: DateFormat.dateAsYYYYMMDD(systemDept.endDate),
+      parent: {
+        id: systemDept.parent.id
+      }
+    }).pipe(
       shareReplay()
     ).subscribe(data => {
       this._systemDept$.next(data)

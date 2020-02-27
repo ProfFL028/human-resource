@@ -1,11 +1,15 @@
 package com.smnsyh.hr.entity
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonIgnore
 import org.hibernate.annotations.Cascade
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.SortNatural
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
 import java.util.*
 import javax.persistence.*
 
@@ -27,19 +31,21 @@ data class SystemDept(
         @Column(name = "sort_number")
         val sortNumber: Int = 999,
 
+        @JsonFormat(pattern="yyyy-MM-dd", timezone = "GMT+08")
         @Column(name="begin_date")
         val beginDate: LocalDate = LocalDate.now(),
 
+        @JsonFormat(pattern="yyyy-MM-dd", timezone = "GMT+08")
         @Column(name="end_date")
         val endDate: LocalDate = LocalDate.MAX,
 
-        @JsonBackReference
-        @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.ALL], optional = true)
+
+        @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.REFRESH], optional = true)
         @JoinColumn(name = "parent_id", nullable = true)
         @Fetch(FetchMode.SELECT)
-        @Cascade(org.hibernate.annotations.CascadeType.ALL, org.hibernate.annotations.CascadeType.SAVE_UPDATE)
         val parent: SystemDept? = null,
 
+        @JsonBackReference
         @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
         @Fetch(FetchMode.SUBSELECT)
         @SortNatural

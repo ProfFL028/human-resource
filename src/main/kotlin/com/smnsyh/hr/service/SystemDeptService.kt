@@ -11,12 +11,19 @@ class SystemDeptService(
     fun getDeptTree(): Iterable<SystemDeptTreeNode> {
         var systemDeptTree = ArrayList<SystemDeptTreeNode>()
 
-        var systemDepts = systemDeptRepository.findAll()
+        var systemDepts = systemDeptRepository.findAllByOrderByParent()
 
         for (systemDept in systemDepts) {
+            var systemDeptTreeNode = SystemDeptTreeNode(systemDept, true)
+            if (systemDept.parent == null) {
+                systemDeptTree.add(systemDeptTreeNode)
+            } else {
+                for (systemDeptTreeNode in systemDeptTree) {
+                    systemDeptTreeNode.addNodeIfMyChild(systemDept)
+                }
+            }
 
         }
-        systemDeptTree.add(SystemDeptTreeNode(systemDepts))
 
         return systemDeptTree
     }

@@ -44,7 +44,7 @@ export class SystemDeptDetailComponent implements OnInit {
     this.onSubmitClick.emit(this.form.value)
   }
 
-  displayFn(systemDept: SystemDept): String {
+  displayFn(systemDept: SystemDept): string {
     console.log(systemDept)
     return systemDept && systemDept.shortName ? systemDept.shortName : ""
   }

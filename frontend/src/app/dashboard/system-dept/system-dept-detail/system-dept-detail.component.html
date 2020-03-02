@@ -1,9 +1,9 @@
-<form [formGroup]="form">
+<form >
   <div class="ui-g ui-g-fluid">
     <div class="ui-g-12">
       <mat-form-field>
         <mat-label>机构号</mat-label>
-        <input formControlName="deptNumber" matInput>
+        <input name="deptNumber"  matInput [(ngModel)]="systemDept.deptNumber" >
         <mat-error></mat-error>
       </mat-form-field>
     </div>
@@ -11,7 +11,7 @@
     <div class="ui-g-12">
       <mat-form-field>
         <mat-label>机构全称</mat-label>
-        <input formControlName="fullName" matInput>
+        <input name="fullName" matInput [(ngModel)]="systemDept.fullName">
         <mat-error></mat-error>
       </mat-form-field>
     </div>
@@ -19,7 +19,7 @@
     <div class="ui-g-12">
       <mat-form-field>
         <mat-label>机构简称</mat-label>
-        <input formControlName="shortName" matInput>
+        <input name="shortName" matInput [(ngModel)]="systemDept.shortName">
         <mat-error></mat-error>
       </mat-form-field>
     </div>
@@ -27,7 +27,7 @@
     <div class="ui-g-12">
       <mat-form-field>
         <mat-label>排序号</mat-label>
-        <input formControlName="sortNumber" matInput>
+        <input name="sortNumber" matInput [(ngModel)]="systemDept.sortNumber">
         <mat-error></mat-error>
       </mat-form-field>
     </div>
@@ -35,20 +35,40 @@
     <div class="ui-g-12">
       <mat-form-field>
         <mat-label>上级机构</mat-label>
-        <input type="text" matInput formControlName="parent" [matAutocomplete]="parentDept">
-        <mat-autocomplete #parentDept [displayWith]="displayFn">
-          <mat-option *ngFor=" let systemDept of systemDeptOptions$ | async" [value]="systemDept">
-            {{systemDept.shortName}}({{systemDept.deptNumber}})
+        <input  type="text" matInput [formControl]="parentDeptControl" [matAutocomplete]="auto" >
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngIf="isOptionsLoading$ | async">
+            <app-loading></app-loading>
           </mat-option>
+          <ng-container *ngIf="!(isOptionsLoading$ | async)">
+            <mat-option *ngFor=" let systemDept of systemDeptOptions$ | async" [value]="systemDept">
+              {{systemDept.shortName}}({{systemDept.deptNumber}})
+            </mat-option>
+          </ng-container>
         </mat-autocomplete>
       </mat-form-field>
     </div>
 
     <div class="ui-g-12">
         <label>有效期限：</label>
-        <p-calendar formControlName="beginDate" [locale]="myZH" dateFormat="yy-mm-dd" monthNavigator="true" yearNavigator="true" yearRange="2000:3000"></p-calendar>
+        <p-calendar name="beginDate"
+                    [locale]="myZH"
+                    dateFormat="yy-mm-dd"
+                    monthNavigator="true"
+                    yearNavigator="true"
+                    yearRange="2000:3000"
+                    [(ngModel)]="systemDept.beginDate"
+        >
+        </p-calendar>
         <label style="margin-left: 10px; margin-right: 10px;">-</label>
-        <p-calendar formControlName="endDate" [locale]="myZH" dateFormat="yy-mm-dd"  monthNavigator="true" yearNavigator="true" yearRange="2000:3000"></p-calendar>
+        <p-calendar name="endDate"
+                    [locale]="myZH"
+                    dateFormat="yy-mm-dd"
+                    monthNavigator="true"
+                    yearNavigator="true"
+                    yearRange="2000:3000"
+                    [(ngModel)]="systemDept.endDate"
+        ></p-calendar>
     </div>
 
     <div class="ui-dialog-buttonpane ui-helper-clearfix">

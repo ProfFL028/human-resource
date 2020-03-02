@@ -1,11 +1,12 @@
-import {Inject, Injectable} from "@angular/core"
-import {BehaviorSubject} from "rxjs"
-import {SystemDept} from "./system-dept.entity"
-import {HttpClient} from "@angular/common/http"
-import {ApiController} from "../../shared/api.controller"
-import {shareReplay, tap} from "rxjs/operators"
-import {TreeNode} from "primeng"
+import {Injectable} from '@angular/core'
+import {BehaviorSubject} from 'rxjs'
+import {SystemDept} from './system-dept.entity'
+import {HttpClient} from '@angular/common/http'
+import {ApiController} from '../../shared/api.controller'
+import {shareReplay} from 'rxjs/operators'
+import {TreeNode} from 'primeng'
 import {DateFormat} from '../../shared/date-format'
+import {forEachComment} from 'tslint'
 
 @Injectable()
 export class SystemDeptService {
@@ -46,10 +47,10 @@ export class SystemDeptService {
     return this.http.get<SystemDept[]>(ApiController.DEPT_API_URL + "/options").pipe(
       shareReplay()
     ).subscribe(data => {
-      console.log("getSystemDeptOptions: " + data)
-      this._isOptionsLoading$.next(false)
+      console.log('getSystemDeptOptions: ' + data)
       this._systemDeptOptions$.next(data)
-    });
+      this._isOptionsLoading$.next(false)
+    })
   }
 
 
@@ -58,7 +59,7 @@ export class SystemDeptService {
     return this.http.get<TreeNode[]>(ApiController.DEPT_API_URL).pipe(
       shareReplay()
     ).subscribe((data) => {
-      console.log(" getSystemDeptTree : "  + data)
+      console.log(' getSystemDeptTree : ' + data)
       this._isLoading$.next(false)
       this._systemDepts$.next(data)
 
@@ -87,7 +88,7 @@ export class SystemDeptService {
     })
   }
 
-  delete(id: Number) {
+  delete(id: number) {
     this._isLoading$.next(true)
     this.http.delete(`${ApiController.DEPT_API_URL}/${id}`).pipe(
       shareReplay()
@@ -100,6 +101,22 @@ export class SystemDeptService {
   }
 
   nextSystemDept(systemDept: SystemDept) {
-    this._systemDept$.next(systemDept)
+    this._systemDept$.next(this.cloneDept(systemDept))
   }
+
+  cloneDept(systemDept: SystemDept): SystemDept {
+    const newSystemDept = new SystemDept()
+    newSystemDept.id = systemDept.id
+    newSystemDept.fullName = systemDept.fullName
+    newSystemDept.shortName = systemDept.shortName
+    newSystemDept.deptNumber = systemDept.deptNumber
+    newSystemDept.sortNumber = systemDept.sortNumber
+    newSystemDept.beginDate = systemDept.beginDate
+    newSystemDept.endDate = systemDept.endDate
+    newSystemDept.parent = systemDept.parent
+    newSystemDept.children = systemDept.children
+
+    return newSystemDept
+  }
+
 }

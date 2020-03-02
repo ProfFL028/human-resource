@@ -1,12 +1,18 @@
 export class DateFormat {
 
-  static dateAsYYYYMMDD(date: Date): string {
+  static dateAsYYYYMMDD(date: Date | string): string {
+    if (typeof date === 'string') {
+      return date
+    }
     return date.getFullYear()
       + '-' + DateFormat.leftpad(date.getMonth() + 1, 2)
       + '-' + DateFormat.leftpad(date.getDate(), 2)
   }
 
-  static dateAsYYYYMMDDHHNNSS(date: Date): string {
+  static dateAsYYYYMMDDHHNNSS(date: Date | string): string {
+    if (typeof date === 'string') {
+      return date
+    }
     return date.getFullYear()
       + '-' + DateFormat.leftpad(date.getMonth() + 1, 2)
       + '-' + DateFormat.leftpad(date.getDate(), 2)

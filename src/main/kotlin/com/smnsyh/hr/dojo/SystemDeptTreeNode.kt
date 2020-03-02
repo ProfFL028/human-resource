@@ -48,9 +48,10 @@ class SystemDeptData(
         @JsonFormat(pattern="yyyy-MM-dd", timezone = "GMT+08")
         var beginDate: LocalDate = LocalDate.now(),
         @JsonFormat(pattern="yyyy-MM-dd", timezone = "GMT+08")
-        var endDate: LocalDate = LocalDate.MAX) {
+        var endDate: LocalDate = LocalDate.MAX,
+        var parent: SystemDeptData? = null) {
 
-    constructor(systemDept: SystemDept) : this() {
+    constructor(systemDept: SystemDept, copyParent: Boolean=true) : this() {
         this.id = systemDept.id
         this.deptNumber = systemDept.deptNumber
         this.fullName = systemDept.fullName
@@ -58,5 +59,8 @@ class SystemDeptData(
         this.sortNumber = systemDept.sortNumber
         this.beginDate = systemDept.beginDate
         this.endDate = systemDept.endDate
+        if (copyParent && systemDept.parent != null) {
+            this.parent = SystemDeptData(systemDept.parent, false)
+        }
     }
 }

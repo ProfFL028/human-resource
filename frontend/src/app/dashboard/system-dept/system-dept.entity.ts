@@ -8,4 +8,5 @@ export class SystemDept {
   endDate: Date
   parent?: SystemDept
   children?: SystemDept[]
+
 }

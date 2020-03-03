@@ -16,7 +16,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData="rowData" let-rowNode>
-    <tr>
+    <tr [ngClass]="isValid(rowData)">
       <td>
         <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
         {{rowData.deptNumber}}
@@ -27,7 +27,7 @@
       <td>{{rowData.beginDate | date:'yyyy年MM月dd日'}} - {{rowData.endDate |  date:'yyyy年MM月dd日'}}</td>
       <td>
         <button class="btn btn-warning" (click)="onEdit(rowData)">修改</button>
-        <button class="btn btn-danger" style="margin-left: 5px" (click)="onDelete(rowData.id)">删除</button>
+        <button class="btn btn-danger" style="margin-left: 5px" (click)="onDelete(rowData)">删除</button>
       </td>
     </tr>
   </ng-template>
@@ -42,3 +42,11 @@
 
   </app-system-dept-detail>
 </p-dialog>
+
+
+<p-confirmDialog #cd header="确认" icon="pi pi-exclamation-triangle">
+  <p-footer>
+    <button type="button" class="btn btn-danger" (click)="cd.accept()">删除</button>
+    <button type="button" class="btn btn-warning" (click)="cd.reject()">取消</button>
+  </p-footer>
+</p-confirmDialog>

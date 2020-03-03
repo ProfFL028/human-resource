@@ -6,7 +6,6 @@ import {ApiController} from '../../shared/api.controller'
 import {shareReplay} from 'rxjs/operators'
 import {TreeNode} from 'primeng'
 import {DateFormat} from '../../shared/date-format'
-import {forEachComment} from 'tslint'
 
 @Injectable()
 export class SystemDeptService {

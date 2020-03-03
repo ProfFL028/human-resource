@@ -15,7 +15,15 @@ import {SystemPositionComponent} from './system-position/system-position.compone
 import {SystemRoleService} from './system-role/system-role.service';
 import {SystemRoleDetailComponent} from './system-role/system-role-detail/system-role-detail.component';
 import {LoadingRoutingModule} from '../shared/loading/loading-routing.module';
-import {AutoCompleteModule, CalendarModule, DialogModule, TableModule, TreeTableModule} from 'primeng'
+import {
+  AutoCompleteModule,
+  CalendarModule,
+  ConfirmationService,
+  ConfirmDialogModule,
+  DialogModule,
+  TableModule,
+  TreeTableModule
+} from 'primeng'
 import {MatInputModule} from '@angular/material/input';
 import {SystemPositionService} from './system-position/system-position.service';
 import {SystemPositionDetailComponent} from './system-position/system-position-detail/system-position-detail.component';
@@ -54,7 +62,8 @@ export const LayoutRoutes: Routes = [
     TreeTableModule,
     CalendarModule,
     AutoCompleteModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    ConfirmDialogModule
   ],
   exports: [
     RouterModule,

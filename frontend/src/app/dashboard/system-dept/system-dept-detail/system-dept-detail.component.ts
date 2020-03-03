@@ -20,11 +20,8 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
   systemDeptOptions$ = this.systemDeptService.systemDeptOptions$
   isOptionsLoading$ = this.systemDeptService.isOptionsLoading$
 
-  filterDepts$: Observable<SystemDept[]>
-
   myZH = zh
   parentDeptControl = new FormControl()
-
 
   constructor(private systemDeptService: SystemDeptService, private formBuilder: FormBuilder) {
 
@@ -37,7 +34,7 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
     this.systemDeptService.getSystemDeptOptions()
 
     this.systemDeptOptions$ = this.parentDeptControl.valueChanges.pipe(
-      startWith(this.systemDept.parent?.shortName),
+      startWith(''),
       debounceTime(300),
       distinctUntilChanged(),
       map(value => this.filter(value))
@@ -46,11 +43,8 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('ngOnChange:' + this.systemDept.parent)
     if (this.systemDept && this.systemDept.parent) {
       this.parentDeptControl.setValue(this.systemDept.parent)
-
-      console.log('after set:' + this.parentDeptControl.value)
     }
   }
 
@@ -61,6 +55,7 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
+    this.systemDept.parent = this.parentDeptControl.value
     this.systemDeptService.save(this.systemDept)
     this.onSubmitClick.emit(this.systemDept)
   }

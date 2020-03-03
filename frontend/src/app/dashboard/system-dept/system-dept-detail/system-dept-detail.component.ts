@@ -5,6 +5,7 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms'
 import {zh} from '../../../shared/locale-zh'
 import {Observable, of} from 'rxjs'
 import {debounceTime, distinctUntilChanged, map, startWith, switchMap} from 'rxjs/operators'
+import {SystemDeptBenjiService} from '../system-dept-benji.service'
 
 @Component({
   selector: 'app-system-dept-detail',
@@ -17,21 +18,22 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
   @Output() onCancelClick = new EventEmitter()
 
   systemDeptOptions: SystemDept[]
-  systemDeptOptions$ = this.systemDeptService.systemDeptOptions$
-  isOptionsLoading$ = this.systemDeptService.isOptionsLoading$
+  systemDeptOptions$ = this.systemDeptBenjiService.systemDeptBenjiOptions$
+  isOptionsLoading$ = this.systemDeptBenjiService.isSystemDeptBenjiLoading$
 
   myZH = zh
   parentDeptControl = new FormControl()
 
-  constructor(private systemDeptService: SystemDeptService, private formBuilder: FormBuilder) {
-
+  constructor(private systemDeptService: SystemDeptService,
+              private systemDeptBenjiService: SystemDeptBenjiService,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.systemDeptOptions$.subscribe( data => {
-      this.systemDeptOptions = data;
+    this.systemDeptBenjiService.getSystemDeptBenjiOptions()
+    this.systemDeptOptions$.subscribe(data => {
+      this.systemDeptOptions = data
     })
-    this.systemDeptService.getSystemDeptOptions()
 
     this.systemDeptOptions$ = this.parentDeptControl.valueChanges.pipe(
       startWith(''),
@@ -50,7 +52,7 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
 
   private filter(value: string): SystemDept[] {
     return this.systemDeptOptions.filter(data => {
-      return data.shortName.indexOf(value) === 0 ||  data.deptNumber.indexOf(value) === 0
+      return data.shortName.indexOf(value) === 0 || data.deptNumber.indexOf(value) === 0
     })
   }
 

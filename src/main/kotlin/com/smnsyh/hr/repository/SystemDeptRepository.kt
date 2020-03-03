@@ -9,4 +9,5 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 interface SystemDeptRepository : CrudRepository<SystemDept, Short> {
     fun findAllByOrderByParent(): List<SystemDept>;
+    fun findByDeptNumberStartsWith(s: String): Iterable<SystemDept>
 }

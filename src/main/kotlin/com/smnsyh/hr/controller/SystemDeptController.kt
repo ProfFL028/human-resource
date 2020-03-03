@@ -22,6 +22,11 @@ class SystemDeptController(
         return this.systemDeptRepository.findAll()
     }
 
+    @GetMapping(ApiController.SYSTEM_DEPT_URL + "/benjiOptions")
+    fun findSystemDeptBenjiOptions(): Iterable<SystemDept> {
+        return this.systemDeptRepository.findByDeptNumberStartsWith("J")
+    }
+
     @PostMapping(ApiController.SYSTEM_DEPT_URL)
     fun save(@RequestBody systemDept: SystemDept) : SystemDept {
         println(systemDept)

@@ -43,7 +43,7 @@ export class SystemDeptService {
 
   getSystemDeptOptions() {
     this._isOptionsLoading$.next(true)
-    return this.http.get<SystemDept[]>(ApiController.DEPT_API_URL + "/options").pipe(
+    return this.http.get<SystemDept[]>(ApiController.DEPT_API_URL + '/options').pipe(
       shareReplay()
     ).subscribe(data => {
       console.log('getSystemDeptOptions: ' + data)

@@ -48,6 +48,7 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
     if (this.systemDept && this.systemDept.parent) {
       this.parentDeptControl.setValue(this.systemDept.parent)
     }
+    this.systemDeptBenjiService.getSystemDeptBenjiOptions()
   }
 
   private filter(value: string): SystemDept[] {

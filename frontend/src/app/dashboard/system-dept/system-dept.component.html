@@ -10,7 +10,7 @@
       <th>机构号</th>
       <th>全称</th>
       <th>简称</th>
-      <th>排序号</th>
+      <th [ngStyle]="{width:'50px'}">排序号</th>
       <th>有效期限</th>
       <th>操作</th>
     </tr>
@@ -23,23 +23,24 @@
       </td>
       <td>{{rowData.fullName}}</td>
       <td>{{rowData.shortName}}</td>
-      <td>{{rowData.sortNumber}}</td>
+      <td [ngStyle]="{width:'50px'}">{{rowData.sortNumber}}</td>
       <td>{{rowData.beginDate | date:'yyyy年MM月dd日'}} - {{rowData.endDate |  date:'yyyy年MM月dd日'}}</td>
       <td>
         <button class="btn btn-warning" (click)="onEdit(rowData)">修改</button>
-        <button class="btn btn-danger" style="margin-left: 5px" (click)="onDelete(rowData)">删除</button>
+        <button type="button" class="btn btn-primary ml5" (click)="onPositionEdit(rowData)">岗位维护</button>
+        <button class="btn btn-danger ml5"  (click)="onDelete(rowData)">删除</button>
       </td>
     </tr>
   </ng-template>
 </p-treeTable>
 
 <p-dialog [header]="dialogTitle" [(visible)]="isEditing" [modal]="true" [style]="{width: '60vw'}" >
+  /；。国
   <app-system-dept-detail
     [systemDept]="systemDept$ | async"
     (onSubmitClick)="onSubmit()"
     (onCancelClick)="onCancel()"
   >
-
   </app-system-dept-detail>
 </p-dialog>
 

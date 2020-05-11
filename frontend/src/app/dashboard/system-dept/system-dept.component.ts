@@ -63,4 +63,8 @@ export class SystemDeptComponent implements OnInit {
     return (now.getTime() >= beginDate.getTime() && now.getTime() <= endDate.getTime()) ? '' : 'not-valid'
   }
 
+  onPositionEdit(systemDept: SystemDept)  {
+
+  }
+
 }

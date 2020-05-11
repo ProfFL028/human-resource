@@ -20,7 +20,7 @@ import {
   CalendarModule,
   ConfirmationService,
   ConfirmDialogModule,
-  DialogModule,
+  DialogModule, PickListModule,
   TableModule,
   TreeTableModule
 } from 'primeng'
@@ -31,7 +31,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {SystemDeptService} from './system-dept/system-dept.service';
 import { SystemDeptDetailComponent } from './system-dept/system-dept-detail/system-dept-detail.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete'
-import {SystemDeptBenjiService} from './system-dept/system-dept-benji.service'
+import {SystemDeptBenjiService} from './system-dept/system-dept-benji.service';
+import { SystemDeptPositionComponent } from './system-dept/system-dept-position/system-dept-position.component'
 
 export const LayoutRoutes: Routes = [
   {
@@ -64,7 +65,8 @@ export const LayoutRoutes: Routes = [
     CalendarModule,
     AutoCompleteModule,
     MatAutocompleteModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    PickListModule
   ],
   exports: [
     RouterModule,
@@ -81,7 +83,8 @@ export const LayoutRoutes: Routes = [
     SystemPositionComponent,
     SystemRoleDetailComponent,
     SystemPositionDetailComponent,
-    SystemDeptDetailComponent
+    SystemDeptDetailComponent,
+    SystemDeptPositionComponent
   ],
   entryComponents: [
     SystemRoleDetailComponent

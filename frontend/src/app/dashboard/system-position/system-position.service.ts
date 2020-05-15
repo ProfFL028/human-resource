@@ -4,6 +4,7 @@ import {SystemPosition} from "./system-position.entity";
 import {ApiController} from "../../shared/api.controller";
 import {BehaviorSubject} from "rxjs";
 import {catchError, shareReplay, tap} from "rxjs/operators";
+import {SystemDept} from '../system-dept/system-dept.entity'
 
 @Injectable()
 export class SystemPositionService {
@@ -63,6 +64,18 @@ export class SystemPositionService {
         this._loading$.next(false);
         this.findAll();
       }
+    )
+  }
+
+  findAvailablePositions(systemDept: SystemDept) {
+    return this.http.get<SystemPosition[]>(ApiController.POSITION_API_URL + "/systemDept/available/" + systemDept.id).pipe(
+      shareReplay()
+    )
+  }
+
+  findOwnedPositions(systemDept: SystemDept) {
+    return this.http.get<SystemPosition[]>(ApiController.POSITION_API_URL + "/systemDept/owned/" + systemDept.id).pipe(
+      shareReplay()
     )
   }
 }

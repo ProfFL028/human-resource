@@ -50,7 +50,18 @@ data class SystemDept(
         @Fetch(FetchMode.SUBSELECT)
         @SortNatural
         @OrderBy("sortNumber ASC")
-        val children: Set<SystemDept> = TreeSet()
+        val children: Set<SystemDept> = TreeSet(),
+
+        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @JoinTable(
+                name = "system_dept_positions",
+                joinColumns = [JoinColumn(name = "dept_id")],
+                inverseJoinColumns = [JoinColumn(name = "position_id")]
+        )
+        @SortNatural
+        @OrderBy("sortNumber ASC")
+        val positions: SortedSet<SystemPosition>? = TreeSet()
+
 ) : Comparable<SystemDept> {
     override fun compareTo(other: SystemDept): Int {
         return sortNumber.compareTo(other.sortNumber)

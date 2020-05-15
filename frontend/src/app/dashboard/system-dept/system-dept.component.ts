@@ -1,14 +1,16 @@
 import {Component, OnInit} from '@angular/core'
 import {SystemDeptService} from './system-dept.service'
 import {SystemDept} from './system-dept.entity'
-import {ConfirmationService} from 'primeng'
+import {ConfirmationService, DialogService} from 'primeng'
+import {SystemDeptPositionComponent} from './system-dept-position/system-dept-position.component'
 
 @Component({
   selector: 'app-system-dept',
   templateUrl: './system-dept.component.html',
   styleUrls: ['./system-dept.component.css'],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    DialogService
   ]
 })
 export class SystemDeptComponent implements OnInit {
@@ -19,7 +21,7 @@ export class SystemDeptComponent implements OnInit {
   isEditing = false
   dialogTitle = ''
 
-  constructor(private systemDeptService: SystemDeptService, private confirmService: ConfirmationService) {
+  constructor(private systemDeptService: SystemDeptService, private confirmService: ConfirmationService, private dialogService: DialogService) {
   }
 
   ngOnInit() {
@@ -63,8 +65,16 @@ export class SystemDeptComponent implements OnInit {
     return (now.getTime() >= beginDate.getTime() && now.getTime() <= endDate.getTime()) ? '' : 'not-valid'
   }
 
-  onPositionEdit(systemDept: SystemDept)  {
+  onPositionEdit(systemDept: SystemDept) {
+
+    this.dialogService.open(SystemDeptPositionComponent, {
+      data: {
+        systemDept: systemDept
+      },
+      header: `${systemDept.shortName}=>岗位维护`,
+      width: '70%',
+      closable: false
+    })
 
   }
-
 }

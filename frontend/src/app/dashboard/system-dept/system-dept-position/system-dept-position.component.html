@@ -1,11 +1,27 @@
-<p-pickList [source]="sourcePositions" [target]="targetPositions" sourceHeader="Available" targetHeader="Selected" [responsive]="true" filterBy="brand"
-            dragdrop="true" sourceFilterPlaceholder="Search by brand" targetFilterPlaceholder="Search by brand" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
-  <ng-template let-car pTemplate="item">
-    <div class="ui-helper-clearfix">
-      <img src="assets/showcase/images/demo/car/{{car.brand}}.png" style="display:inline-block;margin:2px 0 2px 2px" width="48">
-      <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{car.brand}} - {{car.year}} - {{car.color}}</div>
-    </div>
-  </ng-template>
-</p-pickList>
+
+<ng-container>
+  <p-pickList [source]="sourcePositions"
+              [target]="targetPositions"
+              sourceHeader="可用岗位"
+              targetHeader="已选岗位"
+              [responsive]="true"
+              filterBy="name"
+              dragdrop="true"
+              sourceFilterPlaceholder="按岗位名搜索"
+              targetFilterPlaceholder="按岗位名搜索"
+              [sourceStyle]="{'height':'300px'}"
+              [targetStyle]="{'height':'300px'}">
+    <ng-template let-position pTemplate="item">
+      <div class="ui-helper-clearfix">
+        <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{position.name}}</div>
+      </div>
+    </ng-template>
+  </p-pickList>
+
+  <div class="mt15" style="text-align: center">
+    <button class="btn btn-primary" (click)="onSave()">保存</button>
+    <button class="btn btn-danger ml15" (click)="onCancel()">取消</button>
+  </div>
+</ng-container>
 
 

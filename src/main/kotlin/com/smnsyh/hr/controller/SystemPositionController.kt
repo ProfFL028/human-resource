@@ -12,6 +12,17 @@ class SystemPositionController(val systemPositionRepository: SystemPositionRepos
         return this.systemPositionRepository.findAllByOrderBySortNumber()
     }
 
+    @GetMapping(ApiController.SYSTEM_POSITION_URL + "/systemDept/available/{deptId}")
+    fun findAvailablePositions(@PathVariable deptId: Short): List<SystemPosition> {
+
+        return this.systemPositionRepository.findAvailablePositions(deptId)
+    }
+
+    @GetMapping(ApiController.SYSTEM_POSITION_URL + "/systemDept/owned/{deptId}")
+    fun findUnavailablePositions(@PathVariable deptId: Short): List<SystemPosition> {
+        return this.systemPositionRepository.findOwnedPositions(deptId)
+    }
+
     @PostMapping(ApiController.SYSTEM_POSITION_URL)
     fun save(@RequestBody systemPosition: SystemPosition): SystemPosition {
         return this.systemPositionRepository.save(systemPosition)

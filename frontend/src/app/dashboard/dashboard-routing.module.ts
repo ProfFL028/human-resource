@@ -20,7 +20,7 @@ import {
   CalendarModule,
   ConfirmationService,
   ConfirmDialogModule,
-  DialogModule, PickListModule,
+  DialogModule, DynamicDialogModule, PickListModule,
   TableModule,
   TreeTableModule
 } from 'primeng'
@@ -60,6 +60,7 @@ export const LayoutRoutes: Routes = [
     TableModule,
     MatInputModule,
     DialogModule,
+    DynamicDialogModule,
     MatCheckboxModule,
     TreeTableModule,
     CalendarModule,
@@ -87,7 +88,8 @@ export const LayoutRoutes: Routes = [
     SystemDeptPositionComponent
   ],
   entryComponents: [
-    SystemRoleDetailComponent
+    SystemRoleDetailComponent,
+    SystemDeptPositionComponent
   ],
   providers: [
     SystemUserService,

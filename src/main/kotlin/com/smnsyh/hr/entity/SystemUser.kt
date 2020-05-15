@@ -31,7 +31,7 @@ data class SystemUser(
 
         @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
         @JoinTable(
-                name = "user_roles",
+                name = "system_user_roles",
                 joinColumns = [JoinColumn(name = "teller_number")],
                 inverseJoinColumns = [JoinColumn(name = "role_id")]
         )

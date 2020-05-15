@@ -1,4 +1,4 @@
-<div class="row" style="margin-left: 15px">
+<div class="row" style="margin-left: 15px;margin-bottom: 10px;">
   <button class="btn btn-primary" (click)="onAdd()">新增</button>
 </div>
 
@@ -35,7 +35,6 @@
 </p-treeTable>
 
 <p-dialog [header]="dialogTitle" [(visible)]="isEditing" [modal]="true" [style]="{width: '60vw'}" >
-  /；。国
   <app-system-dept-detail
     [systemDept]="systemDept$ | async"
     (onSubmitClick)="onSubmit()"
@@ -43,6 +42,7 @@
   >
   </app-system-dept-detail>
 </p-dialog>
+
 
 
 <p-confirmDialog #cd header="确认" icon="pi pi-exclamation-triangle">

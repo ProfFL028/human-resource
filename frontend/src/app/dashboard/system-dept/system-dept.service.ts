@@ -6,6 +6,7 @@ import {ApiController} from '../../shared/api.controller'
 import {shareReplay} from 'rxjs/operators'
 import {TreeNode} from 'primeng'
 import {DateFormat} from '../../shared/date-format'
+import {SystemPosition} from '../system-position/system-position.entity'
 
 @Injectable()
 export class SystemDeptService {
@@ -118,4 +119,9 @@ export class SystemDeptService {
     return newSystemDept
   }
 
+  modifyPositions(systemDept: SystemDept, targetPositions: SystemPosition[]) {
+    return this.http.post(`${ApiController.DEPT_API_URL}/modifyPositions/${systemDept.id}`, targetPositions).pipe(
+      shareReplay()
+    )
+  }
 }

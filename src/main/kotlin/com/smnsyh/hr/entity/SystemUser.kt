@@ -23,10 +23,12 @@ data class SystemUser(
         @Column(name = "auto_login_ip")
         val autoLoginIp: String = "",
 
-        @ManyToOne
+        @ManyToOne(fetch=FetchType.LAZY)
+        @JoinColumn(name="dept_id")
         val dept: SystemDept? = null,
 
-        @ManyToOne
+        @ManyToOne(fetch=FetchType.LAZY)
+        @JoinColumn(name="position_id")
         val position: SystemPosition? = null,
 
         @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
@@ -37,5 +39,5 @@ data class SystemUser(
         )
         @SortNatural
         @OrderBy("sortNumber ASC")
-        val roles: SortedSet<SystemRole>? = TreeSet<SystemRole>()
+        val roles: Set<SystemRole>? = TreeSet<SystemRole>()
 )

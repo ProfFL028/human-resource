@@ -7,16 +7,18 @@ import javax.persistence.*
 data class SystemPosition(
         @Id
         @GeneratedValue
-        val id: Short,
+        val id: Short = 0,
 
         @Column
-        val name: String,
+        val name: String = "",
 
         @Column(name="sort_number")
         val sortNumber: Int = 999,
 
         @Column
-        val status: Boolean = true
+        val status: Boolean = true,
+
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "position")
+        val users: List<SystemUser> = ArrayList()
 ) {
-    constructor() : this(0, "", 999, true)
 }

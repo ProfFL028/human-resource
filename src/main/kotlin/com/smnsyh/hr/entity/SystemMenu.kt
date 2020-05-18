@@ -37,7 +37,7 @@ data class SystemMenu(
         @Fetch(FetchMode.SUBSELECT)
         @SortNatural
         @OrderBy("sortNumber ASC")
-        val children: SortedSet<SystemMenu>? = TreeSet<SystemMenu>()
+        val children: Set<SystemMenu>? = TreeSet<SystemMenu>()
 
 ) : Comparable<SystemMenu> {
 

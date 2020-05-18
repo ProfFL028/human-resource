@@ -12,6 +12,7 @@ import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.util.*
 import javax.persistence.*
+import kotlin.collections.ArrayList
 
 @Entity(name = "system_dept")
 data class SystemDept(
@@ -39,6 +40,8 @@ data class SystemDept(
         @Column(name="end_date")
         val endDate: LocalDate = LocalDate.MAX,
 
+        @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "dept", orphanRemoval = true)
+        val users: List<SystemUser> = ArrayList(),
 
         @ManyToOne(fetch = FetchType.EAGER, cascade = [CascadeType.REFRESH], optional = true)
         @JoinColumn(name = "parent_id", nullable = true)
@@ -46,7 +49,7 @@ data class SystemDept(
         val parent: SystemDept? = null,
 
         @JsonBackReference
-        @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+        @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = [CascadeType.ALL], orphanRemoval = true)
         @Fetch(FetchMode.SUBSELECT)
         @SortNatural
         @OrderBy("sortNumber ASC")
@@ -60,10 +63,11 @@ data class SystemDept(
         )
         @SortNatural
         @OrderBy("sortNumber ASC")
-        val positions: SortedSet<SystemPosition>? = TreeSet()
+        val positions: Set<SystemPosition>? = TreeSet()
 
 ) : Comparable<SystemDept> {
     override fun compareTo(other: SystemDept): Int {
         return sortNumber.compareTo(other.sortNumber)
     }
+
 }

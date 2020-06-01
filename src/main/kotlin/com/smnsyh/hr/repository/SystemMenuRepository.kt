@@ -1,6 +1,6 @@
 package com.smnsyh.hr.repository
 
-import com.smnsyh.hr.entity.SystemMenu
+import com.smnsyh.hr.entity.SystemMenuPermission
 import com.smnsyh.hr.entity.SystemUser
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
@@ -10,10 +10,10 @@ import javax.persistence.PersistenceContext
 
 @Repository
 @Transactional
-interface SystemMenuRepository : CrudRepository<SystemMenu, Int>, SystemMenuRepositoryCustom
+interface SystemMenuRepository : CrudRepository<SystemMenuPermission, Int>, SystemMenuRepositoryCustom
 
 interface SystemMenuRepositoryCustom {
-    fun findAvailableMenusTo(systemUser: SystemUser): List<SystemMenu>
+    fun findAvailableMenusTo(systemUser: SystemUser): List<SystemMenuPermission>
 }
 
 @Transactional
@@ -21,8 +21,8 @@ class SystemMenuRepositoryImpl : SystemMenuRepositoryCustom {
     @PersistenceContext
     private lateinit var entityManager: EntityManager
 
-    override fun findAvailableMenusTo(systemUser: SystemUser): List<SystemMenu> {
-        return listOf<SystemMenu>()
+    override fun findAvailableMenusTo(systemUser: SystemUser): List<SystemMenuPermission> {
+        return listOf<SystemMenuPermission>()
     }
 
 }

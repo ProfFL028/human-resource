@@ -7,7 +7,7 @@ import com.smnsyh.hr.service.SystemRoleService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class SystemRoleController(private val systemRoleService: SystemRoleService, val systemRoleRepository: SystemRoleRepository) {
+class SystemRoleController(private val systemRoleService: SystemRoleService) {
 
     @GetMapping(ApiController.SYSTEM_ROLE_URL)
     fun findAll(): Iterable<RoleDto> {
@@ -17,7 +17,7 @@ class SystemRoleController(private val systemRoleService: SystemRoleService, val
 
     @PostMapping(ApiController.SYSTEM_ROLE_URL)
     fun save(@RequestBody systemRole: SystemRole): SystemRole {
-        return systemRoleRepository.save(systemRole)
+        return systemRoleService.save(systemRole)
     }
 
     @PostMapping("${ApiController.SYSTEM_ROLE_URL}/status/{id}" )
@@ -27,6 +27,6 @@ class SystemRoleController(private val systemRoleService: SystemRoleService, val
 
     @DeleteMapping("${ApiController.SYSTEM_ROLE_URL}/{id}")
     fun delete(@PathVariable("id") id: Short) {
-        systemRoleRepository.deleteById(id)
+        systemRoleService.deleteById(id)
     }
 }

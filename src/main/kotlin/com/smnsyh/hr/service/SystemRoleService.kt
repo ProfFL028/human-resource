@@ -1,6 +1,7 @@
 package com.smnsyh.hr.service
 
 import com.smnsyh.hr.dto.RoleDto
+import com.smnsyh.hr.entity.SystemRole
 import com.smnsyh.hr.repository.SystemRoleRepository
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
@@ -22,6 +23,14 @@ class SystemRoleService(
     @Transactional
     fun toggleStatus(id: Short) {
         systemRoleRepository.toggleStatus(id)
+    }
+
+    fun save(systemRole: SystemRole): SystemRole {
+        return systemRoleRepository.save(systemRole)
+    }
+
+    fun deleteById(id: Short) {
+        systemRoleRepository.deleteById(id)
     }
 
 }

@@ -20,6 +20,11 @@ class SystemRoleController(private val systemRoleService: SystemRoleService, val
         return systemRoleRepository.save(systemRole)
     }
 
+    @PostMapping("${ApiController.SYSTEM_ROLE_URL}/status/{id}" )
+    fun toggleStatus(@PathVariable("id") id: Short) {
+        systemRoleService.toggleStatus(id)
+    }
+
     @DeleteMapping("${ApiController.SYSTEM_ROLE_URL}/{id}")
     fun delete(@PathVariable("id") id: Short) {
         systemRoleRepository.deleteById(id)

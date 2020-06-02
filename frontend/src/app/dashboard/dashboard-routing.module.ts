@@ -17,7 +17,7 @@ import {SystemRoleDetailComponent} from './system-role/system-role-detail/system
 import {LoadingRoutingModule} from '../shared/loading/loading-routing.module';
 import {
   AutoCompleteModule,
-  CalendarModule,
+  CalendarModule, CheckboxModule,
   ConfirmationService,
   ConfirmDialogModule,
   DialogModule, DynamicDialogModule, PickListModule,
@@ -67,7 +67,8 @@ export const LayoutRoutes: Routes = [
     AutoCompleteModule,
     MatAutocompleteModule,
     ConfirmDialogModule,
-    PickListModule
+    PickListModule,
+    CheckboxModule
   ],
   exports: [
     RouterModule,

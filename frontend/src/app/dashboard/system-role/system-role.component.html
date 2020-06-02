@@ -15,7 +15,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-systemRole>
-    <tr [pSelectableRow]="systemRole" [ngClass]='systemRole?.status ? "not-valid" : ""'>
+    <tr [pSelectableRow]="systemRole" [ngClass]='systemRole.status ? "" : "not-valid"'>
       <td>
         <button class="btn btn-warning" (click)="onEdit(systemRole)">修改</button>
         <button class="btn btn-danger" style="margin-left: 5px" (click)="onDelete(systemRole.id)">删除</button>
@@ -23,7 +23,9 @@
       <td>{{systemRole.id}}</td>
       <td>{{systemRole.name}}</td>
       <td>{{systemRole.sortNumber}}</td>
-      <td>{{systemRole?.status ? "启用": "未启用"}}</td>
+      <td>
+        <p-checkbox name="roleStatus" [binary]="true"  [label]="systemRole.status ? '启用': '未启用'" [(ngModel)]="systemRole.status" (onChange)="onChange(systemRole)"></p-checkbox>
+      </td>
     </tr>
   </ng-template>
 </p-table>

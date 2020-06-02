@@ -41,6 +41,10 @@ export class SystemRoleComponent implements OnInit {
   onRowSelected(event) {
   }
 
+  onChange(systemRole: SystemRole) {
+    this.systemRoleService.toggleStatus(systemRole.id)
+  }
+
   private openDialog(systemRole: SystemRole) {
     const dialogRef = this.dialogService.open(SystemRoleDetailComponent, {
       showHeader: false,

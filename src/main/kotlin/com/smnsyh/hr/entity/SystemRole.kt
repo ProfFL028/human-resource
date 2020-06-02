@@ -1,5 +1,6 @@
 package com.smnsyh.hr.entity
 
+import com.smnsyh.hr.dto.RoleDto
 import org.hibernate.annotations.SortNatural
 import java.util.*
 import javax.persistence.*
@@ -37,6 +38,10 @@ data class SystemRole(
         var users: MutableSet<SystemUser> = TreeSet()
 
 ) : Comparable<SystemRole> {
+
+    fun convertToRoleDto(): RoleDto {
+        return RoleDto(id=this.id, name=this.name, sortNumber = this.sortNumber, status = this.status)
+    }
 
     fun addPermission(permission: SystemPermission) {
         permission.roles.add(this)

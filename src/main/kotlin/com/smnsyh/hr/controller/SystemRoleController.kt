@@ -1,15 +1,18 @@
 package com.smnsyh.hr.controller
 
+import com.smnsyh.hr.dto.RoleDto
 import com.smnsyh.hr.entity.SystemRole
 import com.smnsyh.hr.repository.SystemRoleRepository
+import com.smnsyh.hr.service.SystemRoleService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class SystemRoleController(val systemRoleRepository: SystemRoleRepository) {
+class SystemRoleController(private val systemRoleService: SystemRoleService, val systemRoleRepository: SystemRoleRepository) {
 
     @GetMapping(ApiController.SYSTEM_ROLE_URL)
-    fun findAll(): Iterable<SystemRole> {
-        return systemRoleRepository.findAll()
+    fun findAll(): Iterable<RoleDto> {
+
+        return systemRoleService.findAll()
     }
 
     @PostMapping(ApiController.SYSTEM_ROLE_URL)

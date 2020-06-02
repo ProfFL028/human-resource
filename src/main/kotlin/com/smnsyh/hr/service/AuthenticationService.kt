@@ -25,8 +25,7 @@ class AuthenticationService {
         val passwordInDb: String = systemUserRepository.getPasswordBy(username)
 
         // For test purpose
-        if (true) {
-        //if (passwordInDb.isNotEmpty() && passwordEncoderProvider().matches(password, passwordInDb)) {
+        if (passwordInDb.isNotEmpty() && passwordEncoderProvider().matches(password, passwordInDb)) {
             resultOfAuthentication = AuthenticationWithToken(username, "")
 
             val userDetail = getSystemUserDetails(username)

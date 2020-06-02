@@ -1,7 +1,5 @@
 package com.smnsyh.hr.entity
 
-import org.hibernate.annotations.Sort
-import org.hibernate.annotations.SortNatural
 import java.io.Serializable
 import java.util.*
 import javax.persistence.*

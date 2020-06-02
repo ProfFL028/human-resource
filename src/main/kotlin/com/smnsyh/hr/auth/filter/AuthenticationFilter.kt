@@ -54,7 +54,7 @@ class AuthenticationFilter : GenericFilterBean {
                 return
             }
 
-            if (token != null && token!!.isNotEmpty()) {
+            if (token != null && token.isNotEmpty()) {
                 Companion.logger.info("Trying to authenticate user by X-Auth-Token method, token: $token")
                 processTokenAuthentication(token)
             }

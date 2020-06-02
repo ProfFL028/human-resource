@@ -41,18 +41,18 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers(*actuatorEndpoints()).hasRole(backendAdminRole)
-                .anyRequest().authenticated()
-                .and()
-                .anonymous().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint())
-
-        http.addFilterBefore(AuthenticationFilter(authenticationManager()), BasicAuthenticationFilter::class.java)
-                .addFilterBefore(ManagementEndpointAuthenticationFilter(authenticationManager()), BasicAuthenticationFilter::class.java)
+//                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers(*actuatorEndpoints()).hasRole(backendAdminRole)
+//                .anyRequest().authenticated()
+//                .and()
+//                .anonymous().disable()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint())
+//
+//        http.addFilterBefore(AuthenticationFilter(authenticationManager()), BasicAuthenticationFilter::class.java)
+//                .addFilterBefore(ManagementEndpointAuthenticationFilter(authenticationManager()), BasicAuthenticationFilter::class.java)
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {

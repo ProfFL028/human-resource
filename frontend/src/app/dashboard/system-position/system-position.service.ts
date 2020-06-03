@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {SystemPosition} from "./system-position.entity";
 import {ApiController} from "../../shared/api.controller";
 import {BehaviorSubject} from "rxjs";
-import {catchError, shareReplay, tap} from "rxjs/operators";
+import {catchError, share, shareReplay, tap} from "rxjs/operators"
 import {SystemDept} from '../system-dept/system-dept.entity'
 
 @Injectable()
@@ -77,5 +77,11 @@ export class SystemPositionService {
     return this.http.get<SystemPosition[]>(ApiController.POSITION_API_URL + "/systemDept/owned/" + systemDept.id).pipe(
       shareReplay()
     )
+  }
+
+  toggleStatus(id: number) {
+    this.http.post(ApiController.POSITION_API_URL + "/status/" + id,"").pipe(
+      shareReplay()
+    ).subscribe()
   }
 }

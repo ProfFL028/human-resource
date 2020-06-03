@@ -20,13 +20,13 @@ data class SystemPosition(
         @Column
         var status: Boolean = true,
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = false, mappedBy = "position")
+        @OneToMany(orphanRemoval = false, mappedBy = "position")
         var users: MutableList<SystemUser> = ArrayList(),
 
         @ManyToMany(mappedBy = "positions")
         var depts: MutableSet<SystemDept> = TreeSet(),
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE],fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_position_role",
                 joinColumns = [JoinColumn(name = "position_id")],
@@ -34,7 +34,7 @@ data class SystemPosition(
         )
         var roles: MutableSet<SystemRole> = TreeSet(),
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE],fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_position_permission",
                 joinColumns = [JoinColumn(name = "position_id")],

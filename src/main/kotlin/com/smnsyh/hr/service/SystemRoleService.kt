@@ -26,7 +26,12 @@ class SystemRoleService(
     }
 
     fun save(systemRole: SystemRole): SystemRole {
-        return systemRoleRepository.save(systemRole)
+        if (systemRole.id == null) {
+            this.systemRoleRepository.save(systemRole)
+        } else {
+            this.systemRoleRepository.updateBasicProperties(systemRole)
+        }
+        return systemRole
     }
 
     fun deleteById(id: Short) {

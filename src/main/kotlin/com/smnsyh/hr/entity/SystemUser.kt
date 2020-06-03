@@ -37,7 +37,7 @@ data class SystemUser(
         @JoinColumn(name = "position_id")
         var position: SystemPosition? = null,
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_user_role",
                 joinColumns = [JoinColumn(name = "user_id")],
@@ -45,7 +45,7 @@ data class SystemUser(
         )
         var roles: MutableSet<SystemRole> = TreeSet<SystemRole>(),
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_user_permission",
                 joinColumns = [JoinColumn(name = "user_id")],

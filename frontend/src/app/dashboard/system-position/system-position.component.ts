@@ -58,4 +58,7 @@ export class SystemPositionComponent implements OnInit {
     this.isEditing = false;
   }
 
+  onChange(systemPosition: SystemPosition) {
+    this.systemPositionService.toggleStatus(systemPosition.id)
+  }
 }

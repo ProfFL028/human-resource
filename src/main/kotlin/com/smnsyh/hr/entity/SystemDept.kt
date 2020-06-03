@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import org.hibernate.annotations.Fetch
 import org.hibernate.annotations.FetchMode
 import org.hibernate.annotations.SortNatural
+import org.hibernate.annotations.Where
 import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
@@ -36,7 +37,7 @@ data class SystemDept(
         @Column(name = "end_date")
         var endDate: LocalDate = LocalDate.MAX,
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "dept", orphanRemoval = false)
+        @OneToMany(mappedBy = "dept", orphanRemoval = false)
         var users: MutableList<SystemUser> = ArrayList(),
 
         @ManyToOne(fetch = FetchType.LAZY)
@@ -48,15 +49,16 @@ data class SystemDept(
         @OneToMany(mappedBy = "parent", cascade = [CascadeType.ALL], orphanRemoval = true)
         var children: MutableSet<SystemDept> = TreeSet(),
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_dept_position",
                 joinColumns = [JoinColumn(name = "dept_id")],
                 inverseJoinColumns = [JoinColumn(name = "position_id")]
         )
+        @Where(clause = "status = true")
         var positions: MutableSet<SystemPosition> = TreeSet(),
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_dept_role",
                 joinColumns = [JoinColumn(name = "dept_id")],
@@ -64,7 +66,7 @@ data class SystemDept(
         )
         var roles: MutableSet<SystemRole> = TreeSet<SystemRole>(),
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_dept_permission",
                 joinColumns = [JoinColumn(name = "dept_id")],
@@ -166,7 +168,6 @@ data class SystemDept(
         this.removePositions()
         this.removePermissions()
     }
-
 
 
     override fun compareTo(other: SystemDept): Int {

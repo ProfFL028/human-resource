@@ -20,7 +20,7 @@ data class SystemRole(
         @Column(name = "status")
         var status: Boolean = true,
 
-        @ManyToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
+        @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
         @JoinTable(
                 name = "system_role_permission",
                 joinColumns = [JoinColumn(name = "role_id")],

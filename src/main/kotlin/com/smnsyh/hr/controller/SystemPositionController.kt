@@ -1,35 +1,43 @@
 package com.smnsyh.hr.controller
 
+import com.smnsyh.hr.dto.PositionDto
 import com.smnsyh.hr.entity.SystemPosition
 import com.smnsyh.hr.repository.SystemPositionRepository
+import com.smnsyh.hr.service.SystemPositionService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-class SystemPositionController(val systemPositionRepository: SystemPositionRepository) {
+class SystemPositionController(
+        private val systemPositionsService: SystemPositionService) {
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL)
-    fun findAll(): List<SystemPosition> {
-        return this.systemPositionRepository.findAllByOrderBySortNumber()
+    fun findAll(): List<PositionDto> {
+        return this.systemPositionsService.findAllByOrderBySortNumber()
     }
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL + "/systemDept/available/{deptId}")
-    fun findAvailablePositions(@PathVariable deptId: Short): List<SystemPosition> {
+    fun findAvailablePositions(@PathVariable deptId: Short): List<PositionDto> {
 
-        return this.systemPositionRepository.findAvailablePositions(deptId)
+        return this.systemPositionsService.findAvailablePositions(deptId)
     }
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL + "/systemDept/owned/{deptId}")
-    fun findUnavailablePositions(@PathVariable deptId: Short): List<SystemPosition> {
-        return this.systemPositionRepository.findOwnedPositions(deptId)
+    fun findUnavailablePositions(@PathVariable deptId: Short): List<PositionDto> {
+        return this.systemPositionsService.findOwnedPositions(deptId)
     }
 
     @PostMapping(ApiController.SYSTEM_POSITION_URL)
-    fun save(@RequestBody systemPosition: SystemPosition): SystemPosition {
-        return this.systemPositionRepository.save(systemPosition)
+    fun save(@RequestBody positionDto: PositionDto): PositionDto {
+        return this.systemPositionsService.save(positionDto)
+    }
+
+    @PostMapping("${ApiController.SYSTEM_POSITION_URL}/status/{id}")
+    fun toggleStatus(@PathVariable id: Short) {
+        this.systemPositionsService.toggleStatus(id)
     }
 
     @DeleteMapping(ApiController.SYSTEM_POSITION_URL + "/{id}")
     fun delete(@PathVariable id: Short) {
-        this.systemPositionRepository.deleteById(id)
+        this.systemPositionsService.deleteById(id)
     }
 }

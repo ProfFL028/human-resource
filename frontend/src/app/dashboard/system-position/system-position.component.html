@@ -23,7 +23,7 @@
       <td>{{systemPosition.id}}</td>
       <td>{{systemPosition.name}}</td>
       <td>{{systemPosition.sortNumber}}</td>
-      <td>{{systemPosition?.status ? "启用": "未启用"}}</td>
+      <td><p-checkbox name="roleStatus" [binary]="true"  [label]="systemPosition.status ? '启用': '未启用'" [(ngModel)]="systemPosition.status" (onChange)="onChange(systemPosition)"></p-checkbox></td>
     </tr>
   </ng-template>
 </p-table>

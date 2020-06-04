@@ -5,7 +5,7 @@ import org.hibernate.annotations.SortNatural
 import java.util.*
 import javax.persistence.*
 
-@Entity(name = "system_role")
+@Entity
 data class SystemRole(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

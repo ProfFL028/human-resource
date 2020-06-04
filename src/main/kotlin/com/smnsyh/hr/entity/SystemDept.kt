@@ -11,7 +11,7 @@ import java.util.*
 import javax.persistence.*
 import kotlin.collections.ArrayList
 
-@Entity(name = "system_dept")
+@Entity
 data class SystemDept(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -170,7 +170,7 @@ data class SystemDept(
 
 
     override fun compareTo(other: SystemDept): Int {
-        var parentCompare = parent?.compareTo(other.parent ?: SystemDept()) ?: 0
+        val parentCompare = parent?.compareTo(other.parent ?: SystemDept()) ?: 0
         if (parentCompare == 0) {
             return sortNumber.compareTo(other.sortNumber)
         }

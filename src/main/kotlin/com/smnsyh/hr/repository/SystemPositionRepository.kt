@@ -25,7 +25,7 @@ interface SystemPositionRepository : JpaRepository<SystemPosition, Short> {
     fun toggleStatus(id: Short)
 
     @Modifying
-    @Query("update system_position set name=:#{#systemPosition.name}, sortNumber=:#{#systemPosition.sortNumber}, status=:#{#systemPosition.status} where id=:#{#systemPosition.id}")
+    @Query("update system_position set name=:#{#systemPosition.name}, sortNumber=:#{#systemPosition.sortNumber}, status=:#{#systemPosition.status} where id=:#{#systemPosition.id}", nativeQuery = true)
     fun updateBasicProperties(@Param("systemPosition") systemPosition: SystemPosition)
 
 }

@@ -1,6 +1,7 @@
 package com.smnsyh.hr.service
 
 import com.smnsyh.hr.dojo.SystemDeptTreeNode
+import com.smnsyh.hr.dto.DeptDto
 import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.entity.SystemPosition
 import com.smnsyh.hr.repository.SystemDeptRepository
@@ -11,11 +12,10 @@ import javax.persistence.PersistenceContext
 
 @Service
 class SystemDeptService(
-        var systemDeptRepository: SystemDeptRepository
-
+        val systemDeptRepository: SystemDeptRepository,
+        @PersistenceContext
+        val entityManager: EntityManager
 ) {
-    @PersistenceContext
-    private lateinit var entityManager: EntityManager
 
     @Transactional(readOnly = true)
     fun getDeptTree(): Iterable<SystemDeptTreeNode> {
@@ -56,6 +56,35 @@ class SystemDeptService(
         if (systemDept.parent == null || systemDept.parent?.id == null) {
             systemDept.parent = null
         }
-        return this.systemDeptRepository.save(systemDept)
+        if (systemDept.id == null) {
+            return this.systemDeptRepository.save(systemDept)
+        } else {
+            var query = entityManager.createQuery("update SystemDept d set d.deptNumber=:deptNumber, d.fullName=:fullName, d.shortName=:shortName, d.sortNumber=:sortNumber, d.beginDate=:beginDate, d.endDate=:endDate, d.parent=:parent where d.id=:id")
+            query.setParameter("deptNumber", systemDept.deptNumber)
+            query.setParameter("fullName", systemDept.fullName)
+            query.setParameter("shortName", systemDept.shortName)
+            query.setParameter("sortNumber", systemDept.sortNumber)
+            query.setParameter("parent", systemDept.parent)
+            query.setParameter("beginDate", systemDept.beginDate)
+            query.setParameter("endDate", systemDept.endDate)
+            query.setParameter("id", systemDept.id)
+            query.executeUpdate()
+        }
+        return systemDept
+    }
+
+
+    @Transactional
+    fun deleteById(id: Short) {
+        this.systemDeptRepository.deleteById(id)
+    }
+
+    @Transactional(readOnly = true)
+    fun findByDeptNumberStartsWith(s: String): Iterable<DeptDto> {
+        return this.systemDeptRepository.findByDeptNumberStartsWith(s)
+    }
+    @Transactional(readOnly = true)
+    fun findAll(): Iterable<SystemDept> {
+        return this.systemDeptRepository.findAll()
     }
 }

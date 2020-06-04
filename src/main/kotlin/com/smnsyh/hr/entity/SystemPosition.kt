@@ -5,7 +5,7 @@ import java.util.*
 import javax.persistence.*
 import kotlin.collections.ArrayList
 
-@Entity(name = "system_position")
+@Entity
 data class SystemPosition(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

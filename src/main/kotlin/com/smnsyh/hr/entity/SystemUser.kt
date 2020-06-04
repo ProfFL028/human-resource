@@ -8,7 +8,6 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name = "system_user")
 data class SystemUser(
         @Id
         @Column(name = "teller_number")
@@ -89,7 +88,7 @@ data class SystemUser(
     }
 
     override fun compareTo(other: SystemUser): Int {
-        var positionCompare = position?.compareTo(other.position?: SystemPosition()) ?: 0
+        val positionCompare = position?.compareTo(other.position?: SystemPosition()) ?: 0
         if( positionCompare == 0) {
             return sortNumber.compareTo(other.sortNumber)
         }

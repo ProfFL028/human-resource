@@ -1,19 +1,19 @@
 package com.smnsyh.hr.controller
 
 import com.smnsyh.hr.dojo.SystemDeptTreeNode
+import com.smnsyh.hr.dto.DeptDto
 import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.entity.SystemPosition
 import com.smnsyh.hr.repository.SystemDeptRepository
 import com.smnsyh.hr.service.SystemDeptService
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
+import javax.persistence.EntityManager
 
 @RestController
 class SystemDeptController(
-        val systemDeptRepository: SystemDeptRepository,
-        var systemDeptService: SystemDeptService
+        val systemDeptService: SystemDeptService
 ) {
-
     @GetMapping(ApiController.SYSTEM_DEPT_URL)
     fun findAll(): Iterable<SystemDeptTreeNode> {
         return this.systemDeptService.getDeptTree()
@@ -21,17 +21,16 @@ class SystemDeptController(
 
     @GetMapping(ApiController.SYSTEM_DEPT_URL + "/options")
     fun findSystemDeptOptions(): Iterable<SystemDept> {
-        return this.systemDeptRepository.findAll()
+        return this.systemDeptService.findAll()
     }
 
     @GetMapping(ApiController.SYSTEM_DEPT_URL + "/benjiOptions")
-    fun findSystemDeptBenjiOptions(): Iterable<SystemDept> {
-        return this.systemDeptRepository.findByDeptNumberStartsWith("J")
+    fun findSystemDeptBenjiOptions(): Iterable<DeptDto> {
+        return this.systemDeptService.findByDeptNumberStartsWith("J")
     }
 
     @PostMapping(ApiController.SYSTEM_DEPT_URL)
     fun save(@RequestBody systemDept: SystemDept) : SystemDept {
-
         return this.systemDeptService.save(systemDept)
     }
 
@@ -42,6 +41,6 @@ class SystemDeptController(
 
     @DeleteMapping(ApiController.SYSTEM_DEPT_URL + "/{id}")
     fun delete(@PathVariable id: Short) {
-        this.systemDeptRepository.deleteById(id)
+        this.systemDeptService.deleteById(id)
     }
 }

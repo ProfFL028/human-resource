@@ -17,7 +17,6 @@ class SystemPositionController(
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL + "/systemDept/available/{deptId}")
     fun findAvailablePositions(@PathVariable deptId: Short): List<PositionDto> {
-
         return this.systemPositionsService.findAvailablePositions(deptId)
     }
 

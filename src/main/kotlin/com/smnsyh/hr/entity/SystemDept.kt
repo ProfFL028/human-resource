@@ -40,9 +40,8 @@ data class SystemDept(
         @OneToMany(mappedBy = "dept", orphanRemoval = false)
         var users: MutableList<SystemUser> = ArrayList(),
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.LAZY, optional = true)
         @JoinColumn(name = "parent_id", nullable = true)
-        @Fetch(FetchMode.SELECT)
         var parent: SystemDept? = null,
 
         @JsonBackReference
@@ -115,7 +114,7 @@ data class SystemDept(
         this.children.add(dept)
     }
 
-    fun removeChild(dept: SystemDept) {
+    fun removeChildren(dept: SystemDept) {
         dept.parent = null
         this.children.remove(dept)
     }

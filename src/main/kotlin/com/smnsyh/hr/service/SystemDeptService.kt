@@ -1,12 +1,13 @@
 package com.smnsyh.hr.service
 
 import com.smnsyh.hr.dojo.SystemDeptTreeNode
+import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.entity.SystemPosition
 import com.smnsyh.hr.repository.SystemDeptRepository
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
-import javax.transaction.Transactional
 
 @Service
 class SystemDeptService(
@@ -16,6 +17,7 @@ class SystemDeptService(
     @PersistenceContext
     private lateinit var entityManager: EntityManager
 
+    @Transactional(readOnly = true)
     fun getDeptTree(): Iterable<SystemDeptTreeNode> {
         var systemDeptTree = ArrayList<SystemDeptTreeNode>()
 
@@ -47,5 +49,13 @@ class SystemDeptService(
                     .setParameter(2, systemPosition.id)
                     .executeUpdate()
         }
+    }
+
+    @Transactional
+    fun save(systemDept: SystemDept): SystemDept {
+        if (systemDept.parent == null || systemDept.parent?.id == null) {
+            systemDept.parent = null
+        }
+        return this.systemDeptRepository.save(systemDept)
     }
 }

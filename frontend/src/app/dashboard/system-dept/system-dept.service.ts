@@ -78,7 +78,7 @@ export class SystemDeptService {
       beginDate: DateFormat.dateAsYYYYMMDD(systemDept.beginDate),
       endDate: DateFormat.dateAsYYYYMMDD(systemDept.endDate),
       parent: {
-        id: systemDept.parent.id
+        id: systemDept.parent?.id
       }
     }).pipe(
       shareReplay()

@@ -5,6 +5,7 @@ import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.entity.SystemPosition
 import com.smnsyh.hr.repository.SystemDeptRepository
 import com.smnsyh.hr.service.SystemDeptService
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -30,7 +31,8 @@ class SystemDeptController(
 
     @PostMapping(ApiController.SYSTEM_DEPT_URL)
     fun save(@RequestBody systemDept: SystemDept) : SystemDept {
-        return this.systemDeptRepository.save(systemDept)
+
+        return this.systemDeptService.save(systemDept)
     }
 
     @PostMapping(ApiController.SYSTEM_DEPT_URL + "/modifyPositions/{deptId}")

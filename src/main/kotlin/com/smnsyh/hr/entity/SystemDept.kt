@@ -2,16 +2,16 @@ package com.smnsyh.hr.entity
 
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonFormat
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
-import org.hibernate.annotations.SortNatural
-import org.hibernate.annotations.Where
+import org.hibernate.annotations.*
 import java.time.LocalDate
 import java.util.*
 import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.Entity
 import kotlin.collections.ArrayList
 
 @Entity
+@DynamicUpdate
 data class SystemDept(
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

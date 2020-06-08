@@ -26,9 +26,11 @@
       <td [ngStyle]="{width:'50px'}">{{rowData.sortNumber}}</td>
       <td>{{rowData.beginDate | date:'yyyy年MM月dd日'}} - {{rowData.endDate |  date:'yyyy年MM月dd日'}}</td>
       <td>
-        <button class="btn btn-warning" (click)="onEdit(rowData)">修改</button>
-        <button type="button" class="btn btn-primary ml5" (click)="onPositionEdit(rowData)">岗位维护</button>
-        <button class="btn btn-danger ml5"  (click)="onDelete(rowData)">删除</button>
+        <div *ngIf="rowData.parent?.id > 0">
+          <button class="btn btn-warning" (click)="onEdit(rowData)">修改</button>
+          <button type="button" class="btn btn-primary ml5" (click)="onPositionEdit(rowData)">岗位维护</button>
+          <button class="btn btn-danger ml5"  (click)="onDelete(rowData)">删除</button>
+        </div>
       </td>
     </tr>
   </ng-template>

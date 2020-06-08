@@ -47,17 +47,6 @@ class SystemDeptService(
         systemPositions.map { p -> this.systemPositionRepository.findById(p.id!!.toShort()) }.forEach { p -> dept.addPosition(p.get()) }
 
         this.systemDeptRepository.save(dept)
-
-
-//        var deleteOldPositionsSql = "delete from system_dept_position where dept_id=?"
-//        this.entityManager.createNativeQuery(deleteOldPositionsSql).setParameter(1, deptId).executeUpdate()
-//        for (systemPosition in systemPositions) {
-//            var addPositionSql = "insert into system_dept_position(dept_id, position_id) values(?, ?)"
-//            this.entityManager.createNativeQuery(addPositionSql)
-//                    .setParameter(1, deptId)
-//                    .setParameter(2, systemPosition.id)
-//                    .executeUpdate()
-//        }
     }
 
     @Transactional

@@ -1,12 +1,14 @@
 package com.smnsyh.hr.repository
 
 import com.smnsyh.hr.entity.SystemUser
+import org.springframework.data.domain.Page
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
+import java.awt.print.Pageable
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
@@ -17,6 +19,7 @@ interface SystemUserRepository : CrudRepository<SystemUser, String>, SystemUserR
     @Query("update SystemUser set password=:password where username=:username")
     fun updatePassword(@Param("username") username: String, @Param("password") password: String): Int
 
+    fun findAll(pageable: Pageable): Page<SystemUser>
 }
 
 interface SystemUserRepositoryCustom {

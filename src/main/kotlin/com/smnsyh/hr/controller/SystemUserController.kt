@@ -18,4 +18,5 @@ class SystemUserController(
     fun addUser(@RequestBody user: SystemUser) {
         this.systemUserRepository.save(user)
     }
+
 }

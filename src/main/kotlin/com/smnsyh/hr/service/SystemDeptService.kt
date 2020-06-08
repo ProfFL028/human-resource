@@ -5,6 +5,7 @@ import com.smnsyh.hr.dto.DeptDto
 import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.entity.SystemPosition
 import com.smnsyh.hr.repository.SystemDeptRepository
+import com.smnsyh.hr.repository.SystemPositionRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
@@ -13,6 +14,7 @@ import javax.persistence.PersistenceContext
 @Service
 class SystemDeptService(
         val systemDeptRepository: SystemDeptRepository,
+        val systemPositionRepository: SystemPositionRepository,
         @PersistenceContext
         val entityManager: EntityManager
 ) {
@@ -40,15 +42,22 @@ class SystemDeptService(
 
     @Transactional
     fun modifyPosition(deptId: Short, systemPositions: List<SystemPosition>) {
-        var deleteOldPositionsSql = "delete from system_dept_positions where dept_id=?"
-        this.entityManager.createNativeQuery(deleteOldPositionsSql).setParameter(1, deptId).executeUpdate()
-        for (systemPosition in systemPositions) {
-            var addPositionSql = "insert into system_dept_positions(dept_id, position_id) values(?, ?)"
-            this.entityManager.createNativeQuery(addPositionSql)
-                    .setParameter(1, deptId)
-                    .setParameter(2, systemPosition.id)
-                    .executeUpdate()
-        }
+        var dept = this.systemDeptRepository.findById(deptId).orElse(null)
+        dept.removePositions()
+        systemPositions.map { p -> this.systemPositionRepository.findById(p.id!!.toShort()) }.forEach { p -> dept.addPosition(p.get()) }
+
+        this.systemDeptRepository.save(dept)
+
+
+//        var deleteOldPositionsSql = "delete from system_dept_position where dept_id=?"
+//        this.entityManager.createNativeQuery(deleteOldPositionsSql).setParameter(1, deptId).executeUpdate()
+//        for (systemPosition in systemPositions) {
+//            var addPositionSql = "insert into system_dept_position(dept_id, position_id) values(?, ?)"
+//            this.entityManager.createNativeQuery(addPositionSql)
+//                    .setParameter(1, deptId)
+//                    .setParameter(2, systemPosition.id)
+//                    .executeUpdate()
+//        }
     }
 
     @Transactional

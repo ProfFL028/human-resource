@@ -15,12 +15,14 @@ import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AuthInterceptorService} from "./auth/auth-interceptor.service";
 import {LoadingRoutingModule} from "./shared/loading/loading-routing.module";
+import { SystemUserDetailComponent } from './dashboard/system-user/system-user-detail/system-user-detail.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    SystemUserDetailComponent
   ],
   imports: [
     BrowserModule,

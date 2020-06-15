@@ -16,6 +16,6 @@ interface SystemRoleRepository: CrudRepository<SystemRole, Short> {
     fun toggleStatus(id: Short)
 
     @Modifying
-    @Query("update system_role  set name=:#{#systemRole.name}, status=:#{#systemRole.status}, sort_number=:#{#systemRole.sortNumber}", nativeQuery = true)
+    @Query("update system_role  set name=:#{#systemRole.name}, status=:#{#systemRole.status}, sort_number=:#{#systemRole.sortNumber} where id=:#{#systemRole.id}", nativeQuery = true)
     fun updateBasicProperties(@Param("systemRole") systemRole: SystemRole)
 }

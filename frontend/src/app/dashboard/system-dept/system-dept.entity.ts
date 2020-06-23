@@ -10,3 +10,7 @@ export class SystemDept {
   children?: SystemDept[]
 
 }
+
+export function  systemDeptDisplayForAutoComplete(systemDept?: SystemDept) {
+  return systemDept && systemDept.shortName ? systemDept.shortName : ''
+}

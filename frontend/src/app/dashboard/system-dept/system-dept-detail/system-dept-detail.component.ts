@@ -1,10 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core'
 import {SystemDeptService} from '../system-dept.service'
-import {SystemDept} from '../system-dept.entity'
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms'
+import {SystemDept, systemDeptDisplayForAutoComplete} from '../system-dept.entity'
+import {FormBuilder, FormControl} from '@angular/forms'
 import {zh} from '../../../shared/locale-zh'
-import {Observable, of} from 'rxjs'
-import {debounceTime, distinctUntilChanged, map, startWith, switchMap} from 'rxjs/operators'
+import {debounceTime, distinctUntilChanged, map, startWith} from 'rxjs/operators'
 import {SystemDeptBenjiService} from '../system-dept-benji.service'
 
 @Component({
@@ -63,8 +62,8 @@ export class SystemDeptDetailComponent implements OnInit, OnChanges {
     this.onSubmitClick.emit(this.systemDept)
   }
 
-  displayFn(systemDept?: SystemDept): string {
-    return systemDept && systemDept.shortName ? systemDept.shortName : ''
+  displaySystemDept(systemDept?: SystemDept): string {
+    return systemDeptDisplayForAutoComplete(systemDept)
   }
 
   onCancel() {

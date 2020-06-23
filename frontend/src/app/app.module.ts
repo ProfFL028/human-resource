@@ -16,6 +16,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {AuthInterceptorService} from "./auth/auth-interceptor.service";
 import {LoadingRoutingModule} from "./shared/loading/loading-routing.module";
 import { SystemUserDetailComponent } from './dashboard/system-user/system-user-detail/system-user-detail.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete'
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { SystemUserDetailComponent } from './dashboard/system-user/system-user-d
     BrowserAnimationsModule,
     MatInputModule,
     MatCheckboxModule,
-    LoadingRoutingModule
+    LoadingRoutingModule,
+    MatAutocompleteModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}

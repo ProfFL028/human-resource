@@ -7,6 +7,7 @@ import {shareReplay} from 'rxjs/operators'
 import {TreeNode} from 'primeng'
 import {DateFormat} from '../../shared/date-format'
 import {SystemPosition} from '../system-position/system-position.entity'
+import {SystemDeptPositionComponent} from './system-dept-position/system-dept-position.component'
 
 @Injectable()
 export class SystemDeptService {
@@ -17,7 +18,19 @@ export class SystemDeptService {
   private _isOptionsLoading$ = new BehaviorSubject<boolean>(false)
   private _systemDeptOptions$ = new BehaviorSubject<SystemDept[]>([])
 
+  private _isTrueSystemDeptLoading$ = new BehaviorSubject<boolean>(false)
+  private _trueSystemDepts$ = new BehaviorSubject<SystemDept[]>([])
+
   public systemDepts: TreeNode[]
+
+
+  get isTrueSystemDeptLoading$() {
+    return this._isTrueSystemDeptLoading$.asObservable()
+  }
+
+  get trueSystemDepts$() {
+    return this._trueSystemDepts$.asObservable()
+  }
 
   get isLoading$() {
     return this._isLoading$.asObservable()
@@ -50,6 +63,16 @@ export class SystemDeptService {
       console.log('getSystemDeptOptions: ' + data)
       this._systemDeptOptions$.next(data)
       this._isOptionsLoading$.next(false)
+    })
+  }
+
+  getTrueSystemDeptOptions() {
+    this._isTrueSystemDeptLoading$.next(true)
+    return this.http.get<SystemDept[]>(ApiController.DEPT_API_URL + '/trueDept').pipe(
+      shareReplay()
+    ).subscribe( data => {
+      this._trueSystemDepts$.next(data)
+      this._isTrueSystemDeptLoading$.next(false)
     })
   }
 

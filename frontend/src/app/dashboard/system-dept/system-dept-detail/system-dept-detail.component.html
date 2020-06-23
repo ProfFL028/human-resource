@@ -36,7 +36,7 @@
       <mat-form-field>
         <mat-label>上级机构</mat-label>
         <input  type="text" matInput [formControl]="parentDeptControl" [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySystemDept">
           <mat-option *ngIf="isOptionsLoading$ | async">
             <app-loading></app-loading>
           </mat-option>

@@ -24,6 +24,11 @@ class SystemDeptController(
         return this.systemDeptService.findAll()
     }
 
+    @GetMapping(ApiController.SYSTEM_DEPT_URL + "/trueDept")
+    fun findTrueDepts(): Iterable<DeptDto> {
+        return this.systemDeptService.findByDeptNumberStartsWith("9")
+    }
+
     @GetMapping(ApiController.SYSTEM_DEPT_URL + "/benjiOptions")
     fun findSystemDeptBenjiOptions(): Iterable<DeptDto> {
         return this.systemDeptService.findByDeptNumberStartsWith("J")

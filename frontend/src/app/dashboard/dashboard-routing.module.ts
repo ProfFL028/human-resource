@@ -33,6 +33,7 @@ import { SystemDeptDetailComponent } from './system-dept/system-dept-detail/syst
 import {MatAutocompleteModule} from '@angular/material/autocomplete'
 import {SystemDeptBenjiService} from './system-dept/system-dept-benji.service';
 import { SystemDeptPositionComponent } from './system-dept/system-dept-position/system-dept-position.component'
+import {SystemUserDetailComponent} from './system-user/system-user-detail/system-user-detail.component'
 
 export const LayoutRoutes: Routes = [
   {
@@ -90,7 +91,8 @@ export const LayoutRoutes: Routes = [
   ],
   entryComponents: [
     SystemRoleDetailComponent,
-    SystemDeptPositionComponent
+    SystemDeptPositionComponent,
+    SystemUserDetailComponent
   ],
   providers: [
     SystemUserService,

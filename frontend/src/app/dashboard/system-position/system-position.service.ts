@@ -12,6 +12,9 @@ export class SystemPositionService {
   private _systemPositions$ = new BehaviorSubject<SystemPosition[]>([]);
   private _systemPosition$ = new BehaviorSubject<SystemPosition>(new SystemPosition());
 
+  private _deptPositionLoading$ = new BehaviorSubject<boolean>(false)
+  private _deptPositions$ = new BehaviorSubject<SystemPosition[]>([])
+
   get loading$() {
     return this._loading$.asObservable();
   }
@@ -20,6 +23,14 @@ export class SystemPositionService {
   }
   get systemPositions$() {
     return this._systemPositions$.asObservable();
+  }
+
+  get deptPositionLoading$() {
+    return this._deptPositionLoading$.asObservable()
+  }
+
+  get deptPositions$() {
+    return this._deptPositions$.asObservable()
   }
 
   nextSystemPosition(systemPosition: SystemPosition) {
@@ -37,6 +48,18 @@ export class SystemPositionService {
       data => {
         this._systemPositions$.next(data);
         this._loading$.next(false);
+      }
+    )
+  }
+
+  getPositionsBy(dept: SystemDept) {
+    this._deptPositionLoading$.next(true)
+    return this.http.get<SystemPosition[]>(ApiController.POSITION_API_URL + '/systemDept/available/' + dept.id).pipe(
+      shareReplay()
+    ).subscribe(
+      data => {
+        this._deptPositionLoading$.next(false)
+        this._deptPositions$.next(data)
       }
     )
   }

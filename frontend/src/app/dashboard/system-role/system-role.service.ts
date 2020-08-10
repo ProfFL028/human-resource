@@ -56,7 +56,11 @@ export class SystemRoleService {
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = '未知错误'
+    console.log(errorRes)
     switch (errorRes.status) {
+      case 500:
+        errorMessage = "内部错误"
+        break
       case 400:
         errorMessage = "内部错误"
         break

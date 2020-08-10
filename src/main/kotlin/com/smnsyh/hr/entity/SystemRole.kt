@@ -12,8 +12,7 @@ data class SystemRole(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Short? = null,
 
-        @NotNull(message="角色名不能为空")
-        @Size(min=2, message = "角色名长度不能少于2位")
+        @get: [Size(min=5, max=11, message = "角色名长度不能少于2位") NotNull(message="角色名不能为空")]
         @Column(name = "name")
         var name: String? = null,
 

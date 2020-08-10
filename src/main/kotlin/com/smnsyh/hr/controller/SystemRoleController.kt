@@ -3,8 +3,12 @@ package com.smnsyh.hr.controller
 import com.smnsyh.hr.vo.RoleVO
 import com.smnsyh.hr.entity.SystemRole
 import com.smnsyh.hr.service.SystemRoleService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.validation.BindingResult
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
+import javax.validation.Validator
 
 @RestController
 class SystemRoleController(private val systemRoleService: SystemRoleService) {

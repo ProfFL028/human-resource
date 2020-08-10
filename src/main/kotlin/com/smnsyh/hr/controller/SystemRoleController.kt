@@ -1,22 +1,22 @@
 package com.smnsyh.hr.controller
 
-import com.smnsyh.hr.dto.RoleDto
+import com.smnsyh.hr.vo.RoleVO
 import com.smnsyh.hr.entity.SystemRole
-import com.smnsyh.hr.repository.SystemRoleRepository
 import com.smnsyh.hr.service.SystemRoleService
 import org.springframework.web.bind.annotation.*
+import javax.validation.Valid
 
 @RestController
 class SystemRoleController(private val systemRoleService: SystemRoleService) {
 
     @GetMapping(ApiController.SYSTEM_ROLE_URL)
-    fun findAll(): Iterable<RoleDto> {
+    fun findAll(): Iterable<RoleVO> {
 
         return systemRoleService.findAll()
     }
 
     @PostMapping(ApiController.SYSTEM_ROLE_URL)
-    fun save(@RequestBody systemRole: SystemRole): SystemRole {
+    fun save(@RequestBody @Valid systemRole: SystemRole): SystemRole {
         return systemRoleService.save(systemRole)
     }
 

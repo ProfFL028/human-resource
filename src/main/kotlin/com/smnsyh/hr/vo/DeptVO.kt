@@ -1,6 +1,6 @@
-package com.smnsyh.hr.dto
+package com.smnsyh.hr.vo
 
-data class DeptDto(
+data class DeptVO(
         var id: Short? = null,
         var deptNumber: String? = null,
         var shortName: String? = null

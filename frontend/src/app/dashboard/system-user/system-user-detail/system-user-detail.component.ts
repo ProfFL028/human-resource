@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core'
 import {DynamicDialogConfig, DynamicDialogRef} from 'primeng'
 import {SystemUser} from '../system-user.entity'
 import {SystemUserService} from '../system-user.service'
@@ -18,6 +18,7 @@ import {SystemPositionService} from '../../system-position/system-position.servi
 })
 export class SystemUserDetailComponent implements OnInit {
 
+  @Input()
   systemUser: SystemUser
 
   deptControl: FormControl = new FormControl()
@@ -56,9 +57,9 @@ export class SystemUserDetailComponent implements OnInit {
   }
 
   onSubmit() {
-    this.systemUser.dept = this.deptControl.value
-    this.systemUser.position = this.positionControl.value
-    console.log(this.systemUser)
+    this.systemUserService.save(this.systemUser).subscribe(() => {
+      this.dialogRef.close()
+    })
   }
 
   onCancel() {

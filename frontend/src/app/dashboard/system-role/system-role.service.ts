@@ -1,9 +1,10 @@
 import {HttpClient, HttpErrorResponse} from "@angular/common/http"
 import {ApiController} from "../../shared/api.controller"
-import {catchError, share, shareReplay, tap} from "rxjs/operators"
+import {catchError, shareReplay, tap} from "rxjs/operators"
 import {SystemRole} from "./system-role.entity"
-import {BehaviorSubject, of, throwError} from "rxjs"
+import {BehaviorSubject, of} from "rxjs"
 import {Injectable} from "@angular/core"
+import {ResultValue} from '../../shared/ResultValue'
 
 @Injectable()
 export class SystemRoleService {
@@ -15,12 +16,13 @@ export class SystemRoleService {
   }
 
   findAll() {
-    return this.http.get<SystemRole[]>(ApiController.ROLE_API_URL).pipe(shareReplay(),
+    return this.http.get<ResultValue<SystemRole>>(ApiController.ROLE_API_URL).pipe(shareReplay(),
       tap(() => {
         this._loading$.next(true)
       }),
-      catchError(this.handleError)).subscribe(data => {
-      this._systemRoles$.next(data)
+      catchError(this.handleError)
+    ).subscribe(data => {
+      this._systemRoles$.next(data.data)
       this._loading$.next(false)
     })
   }
@@ -30,7 +32,8 @@ export class SystemRoleService {
       tap(data => {
         this._loading$.next(true)
       }),
-      catchError(this.handleError)).subscribe(
+      catchError(this.handleError)
+    ).subscribe(
       data => {
         this._systemRole$.next(data)
         this._loading$.next(false)
@@ -43,7 +46,8 @@ export class SystemRoleService {
       tap(data => {
         this._loading$.next(true)
       }),
-      catchError(this.handleError)).subscribe(data => {
+      catchError(this.handleError)
+    ).subscribe(data => {
       this._systemRole$.next(data)
       this._loading$.next(false)
       this.findAll()

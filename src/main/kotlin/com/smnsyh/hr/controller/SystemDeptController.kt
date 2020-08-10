@@ -1,14 +1,11 @@
 package com.smnsyh.hr.controller
 
 import com.smnsyh.hr.dojo.SystemDeptTreeNode
-import com.smnsyh.hr.dto.DeptDto
+import com.smnsyh.hr.vo.DeptVO
 import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.entity.SystemPosition
-import com.smnsyh.hr.repository.SystemDeptRepository
 import com.smnsyh.hr.service.SystemDeptService
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import javax.persistence.EntityManager
 
 @RestController
 class SystemDeptController(
@@ -25,12 +22,12 @@ class SystemDeptController(
     }
 
     @GetMapping(ApiController.SYSTEM_DEPT_URL + "/trueDept")
-    fun findTrueDepts(): Iterable<DeptDto> {
+    fun findTrueDepts(): Iterable<DeptVO> {
         return this.systemDeptService.findByDeptNumberStartsWith("9")
     }
 
     @GetMapping(ApiController.SYSTEM_DEPT_URL + "/benjiOptions")
-    fun findSystemDeptBenjiOptions(): Iterable<DeptDto> {
+    fun findSystemDeptBenjiOptions(): Iterable<DeptVO> {
         return this.systemDeptService.findByDeptNumberStartsWith("J")
     }
 

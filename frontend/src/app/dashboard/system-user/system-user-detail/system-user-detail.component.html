@@ -35,7 +35,7 @@
     <div class="ui-g-12">
       <mat-form-field>
         <mat-label>所属部门</mat-label>
-        <input  type="text" matInput [formControl]="deptControl" [matAutocomplete]="auto">
+        <input  type="text" matInput [formControl]="deptControl" [matAutocomplete]="auto" [(ngModel)]="systemUser.dept">
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySystemDept" (optionSelected)="changePosition($event)">
           <mat-option *ngIf="isDeptLoading$ | async">
             <app-loading></app-loading>
@@ -51,8 +51,9 @@
 
     <div class="ui-g-12">
       <mat-form-field>
-        <mat-label>所属机构</mat-label>
-        <input  type="text" matInput [formControl]="positionControl" [matAutocomplete]="positionAuto">
+        <mat-label>岗位</mat-label>
+        <input  type="text" matInput [formControl]="positionControl" [matAutocomplete]="positionAuto"
+                [(ngModel)]="systemUser.position">
         <mat-autocomplete #positionAuto="matAutocomplete" [displayWith]="displayPositionFn">
           <mat-option *ngIf="isPositionLoading$ | async">
             <app-loading></app-loading>

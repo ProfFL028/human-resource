@@ -2,6 +2,8 @@
   <button class="btn btn-primary" style="margin-left: 15px;" (click)="onAdd()">新增</button>
 </div>
 
+<app-loading *ngIf="loading$ | async"></app-loading>
+
 <table class="table table-striped">
   <thead>
   <tr>
@@ -15,7 +17,8 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let systemUser of systemUsers; index as i">
+
+  <tr *ngFor="let systemUser of systemUsers$ | async; index as i">
     <td>{{i + 1}}</td>
     <td>{{systemUser.tellerNumber}}</td>
     <td>{{systemUser.name}}</td>

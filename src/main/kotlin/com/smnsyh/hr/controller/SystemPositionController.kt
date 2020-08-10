@@ -1,8 +1,6 @@
 package com.smnsyh.hr.controller
 
-import com.smnsyh.hr.dto.PositionDto
-import com.smnsyh.hr.entity.SystemPosition
-import com.smnsyh.hr.repository.SystemPositionRepository
+import com.smnsyh.hr.vo.PositionVO
 import com.smnsyh.hr.service.SystemPositionService
 import org.springframework.web.bind.annotation.*
 
@@ -11,22 +9,22 @@ class SystemPositionController(
         private val systemPositionsService: SystemPositionService) {
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL)
-    fun findAll(): List<PositionDto> {
+    fun findAll(): List<PositionVO> {
         return this.systemPositionsService.findAllByOrderBySortNumber()
     }
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL + "/systemDept/available/{deptId}")
-    fun findAvailablePositions(@PathVariable deptId: Short): List<PositionDto> {
+    fun findAvailablePositions(@PathVariable deptId: Short): List<PositionVO> {
         return this.systemPositionsService.findAvailablePositions(deptId)
     }
 
     @GetMapping(ApiController.SYSTEM_POSITION_URL + "/systemDept/owned/{deptId}")
-    fun findUnavailablePositions(@PathVariable deptId: Short): List<PositionDto> {
+    fun findUnavailablePositions(@PathVariable deptId: Short): List<PositionVO> {
         return this.systemPositionsService.findOwnedPositions(deptId)
     }
 
     @PostMapping(ApiController.SYSTEM_POSITION_URL)
-    fun save(@RequestBody positionDto: PositionDto): PositionDto {
+    fun save(@RequestBody positionDto: PositionVO): PositionVO {
         return this.systemPositionsService.save(positionDto)
     }
 

@@ -1,7 +1,7 @@
 package com.smnsyh.hr.service
 
 import com.smnsyh.hr.dojo.SystemDeptTreeNode
-import com.smnsyh.hr.dto.DeptDto
+import com.smnsyh.hr.vo.DeptVO
 import com.smnsyh.hr.entity.SystemDept
 import com.smnsyh.hr.entity.SystemPosition
 import com.smnsyh.hr.repository.SystemDeptRepository
@@ -78,7 +78,7 @@ class SystemDeptService(
     }
 
     @Transactional(readOnly = true)
-    fun findByDeptNumberStartsWith(s: String): Iterable<DeptDto> {
+    fun findByDeptNumberStartsWith(s: String): Iterable<DeptVO> {
         return this.systemDeptRepository.findByDeptNumberStartsWith(s)
     }
     @Transactional(readOnly = true)

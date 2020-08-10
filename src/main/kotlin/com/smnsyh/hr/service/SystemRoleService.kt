@@ -1,6 +1,6 @@
 package com.smnsyh.hr.service
 
-import com.smnsyh.hr.dto.RoleDto
+import com.smnsyh.hr.vo.RoleVO
 import com.smnsyh.hr.entity.SystemRole
 import com.smnsyh.hr.repository.SystemRoleRepository
 import org.modelmapper.ModelMapper
@@ -14,10 +14,10 @@ class SystemRoleService(
 ) {
 
     @Transactional(readOnly=true)
-    fun findAll(): List<RoleDto> {
+    fun findAll(): List<RoleVO> {
         var systemRoles = systemRoleRepository.findAll()
 
-        return systemRoles.map { role -> modelMapper.map(role, RoleDto::class.java)}.toList()
+        return systemRoles.map { role -> modelMapper.map(role, RoleVO::class.java)}.toList()
     }
 
     @Transactional

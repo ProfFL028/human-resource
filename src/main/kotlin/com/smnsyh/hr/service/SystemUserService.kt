@@ -1,6 +1,6 @@
 package com.smnsyh.hr.service
 
-import com.smnsyh.hr.dto.UserDto
+import com.smnsyh.hr.vo.UserVO
 import com.smnsyh.hr.entity.SystemUser
 import com.smnsyh.hr.repository.SystemDeptRepository
 import com.smnsyh.hr.repository.SystemPositionRepository
@@ -10,11 +10,10 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.data.repository.findByIdOrNull
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import org.springframework.util.StringUtils
+import org.springframework.transaction.annotation.Transactional
 import javax.persistence.EntityManager
 
 @Service
@@ -22,6 +21,7 @@ class SystemUserService(
         val systemUserRepository: SystemUserRepository,
         val systemDeptRepository: SystemDeptRepository,
         val systemPositionRepository: SystemPositionRepository,
+        val passwordEncoder: BCryptPasswordEncoder,
         val entityManager: EntityManager,
         val modelMapper: ModelMapper
 ) {
@@ -29,34 +29,47 @@ class SystemUserService(
         val logger: Logger = LoggerFactory.getLogger(SystemUserService::class.java)
     }
 
-    fun findUsers(page: Int, size: Int): Page<UserDto> {
-        return this.systemUserRepository.findAll(PageRequest.of(page, size, Sort.by("sortNumber")))
+    @Transactional(readOnly = true)
+    fun findUsers(page: Int, size: Int): Page<UserVO> {
+        var userDto = this.systemUserRepository.findAll(PageRequest.of(page, size, Sort.by("sortNumber")))
+
+        return userDto.map { userDto -> modelMapper.map(userDto, UserVO::class.java) }
     }
 
-    fun save(userDto: UserDto) {
+    @Transactional
+    fun save(userDto: UserVO) {
         var systemUser = this.modelMapper.map(userDto, SystemUser::class.java)
-        var systemDept = this.systemDeptRepository.findByIdOrNull(userDto.dept?.id ?: 0)
-        var systemPosition = this.systemPositionRepository.findByIdOrNull(userDto.position?.id ?: 0)
-        systemUser.dept = systemDept
-        systemUser.position = systemPosition
 
-        if (StringUtils.isEmpty(userDto)) {
-            this.systemUserRepository.save(systemUser)
+        if (!this.systemUserRepository.existsById(systemUser.tellerNumber ?: "")) {
+            systemUser.password = passwordEncoder.encode("123456")
+            var insertQuery = this.entityManager.createNativeQuery("insert into system_user(auto_login_ip, dept_id, " +
+                    "name, password, position_id, sort_number, telephone, teller_number) values (?, ?, ?, ?, ?, ?, ?," +
+                    " ?)")
+            insertQuery.setParameter(1, systemUser.autoLoginIp)
+            insertQuery.setParameter(2, systemUser.dept?.id)
+            insertQuery.setParameter(3, systemUser.name)
+            insertQuery.setParameter(4, systemUser.password)
+            insertQuery.setParameter(5, systemUser.position?.id)
+            insertQuery.setParameter(6, systemUser.sortNumber)
+            insertQuery.setParameter(7, systemUser.telephone)
+            insertQuery.setParameter(8, systemUser.tellerNumber)
+            insertQuery.executeUpdate()
         } else {
             var updateQuery = this.entityManager.createQuery("update SystemUser set name=:name, password=:password, " +
-                    "telephone=:telephone, autoLoginIp=:autoLoginIp, sortNumber=sortNumber, dept=:dept, " +
+                    "telephone=:telephone, autoLoginIp=:autoLoginIp, sortNumber=:sortNumber, dept=:dept, " +
                     "position=:position  where tellerNumber=:tellerNumber")
-            updateQuery.setParameter("name", userDto.name)
-            updateQuery.setParameter("password", userDto.password)
-            updateQuery.setParameter("telephone", userDto.telephone)
-            updateQuery.setParameter("autoLoginIp", userDto.autoLoginIp)
-            updateQuery.setParameter("sortNumber", userDto.sortNumber)
-            updateQuery.setParameter("dept", userDto.dept)
-            updateQuery.setParameter("position", userDto.position)
-            updateQuery.setParameter("tellerNumber", userDto.tellerNumber)
+            updateQuery.setParameter("name", systemUser.name)
+            updateQuery.setParameter("password", systemUser.password)
+            updateQuery.setParameter("telephone", systemUser.telephone)
+            updateQuery.setParameter("autoLoginIp", systemUser.autoLoginIp)
+            updateQuery.setParameter("sortNumber", systemUser.sortNumber)
+            updateQuery.setParameter("dept", systemUser.dept)
+            updateQuery.setParameter("position", systemUser.position)
+            updateQuery.setParameter("tellerNumber", systemUser.tellerNumber)
 
             updateQuery.executeUpdate()
         }
     }
+
 }
 

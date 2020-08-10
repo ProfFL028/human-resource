@@ -1,6 +1,6 @@
-package com.smnsyh.hr.dto
+package com.smnsyh.hr.vo
 
-data class RoleDto(
+data class RoleVO(
         var id: Short? = null,
         var name: String? = null,
         var sortNumber: Int = 999,

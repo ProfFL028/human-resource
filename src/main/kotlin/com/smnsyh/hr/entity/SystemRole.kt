@@ -1,9 +1,10 @@
 package com.smnsyh.hr.entity
 
-import com.smnsyh.hr.dto.RoleDto
-import org.hibernate.annotations.SortNatural
+import com.smnsyh.hr.vo.RoleVO
 import java.util.*
 import javax.persistence.*
+import javax.validation.constraints.NotNull
+import javax.validation.constraints.Size
 
 @Entity
 data class SystemRole(
@@ -11,6 +12,8 @@ data class SystemRole(
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         var id: Short? = null,
 
+        @NotNull(message="角色名不能为空")
+        @Size(min=2, message = "角色名长度不能少于2位")
         @Column(name = "name")
         var name: String? = null,
 
@@ -39,8 +42,8 @@ data class SystemRole(
 
 ) : Comparable<SystemRole> {
 
-    fun convertToRoleDto(): RoleDto {
-        return RoleDto(id=this.id, name=this.name, sortNumber = this.sortNumber, status = this.status)
+    fun convertToRoleDto(): RoleVO {
+        return RoleVO(id=this.id, name=this.name, sortNumber = this.sortNumber, status = this.status)
     }
 
     fun addPermission(permission: SystemPermission) {

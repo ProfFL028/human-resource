@@ -16,31 +16,30 @@ import {SystemDept} from '../system-dept/system-dept.entity'
   ]
 })
 export class SystemUserComponent implements OnInit {
-  systemUsers: SystemUser[]
+  systemUsers$ = this.systemUserService.users$
+  loading$ = this.systemUserService.loading$
 
 
   constructor(private systemUserService: SystemUserService, private confirmationService: ConfirmationService, private dialogService: DialogService) {
   }
 
   ngOnInit() {
-    this.systemUserService.findAll().subscribe(data => {
-      console.log(data)
-      this.systemUsers = data
-    })
+    this.systemUserService.findAll()
   }
 
   onAdd() {
-    this.dialogService.open(SystemUserDetailComponent, {
+    const dialogRef = this.dialogService.open(SystemUserDetailComponent, {
       data: {
         systemUser: new SystemUser()
       },
       header: `新增用户`,
       closable: false,
-      width: '50%'
+      width: '50%',
+    })
+
+    dialogRef.onClose.subscribe( (systemUser: SystemUser) => {
+      this.systemUserService.findAll()
     })
   }
 
-  displayFn(systemDept?: SystemDept): string {
-    return systemDept && systemDept.shortName ? systemDept.shortName : ''
-  }
 }
